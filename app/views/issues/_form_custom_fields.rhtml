@@ -2,7 +2,9 @@
 <% i = 0 %>
 <% split_on = (@issue.custom_field_values.size / 2.0).ceil - 1 %>
 <% @issue.custom_field_values.each do |value| %>
-	<p><%= custom_field_tag_with_label :issue, value %></p>
+	<% if User.current.admin? || !value.custom_field.admin? -%>
+		<p><%= custom_field_tag_with_label :issue, value %></p>
+	<% end -%>
 <% if i == split_on -%>
 </div><div class="splitcontentright">
 <% end -%>
