@@ -53,7 +53,8 @@ Rails::Initializer.run do |config|
   config.gem 'rubytree', :lib => 'tree'
   config.gem 'i18n', :version => '0.3.7'
   config.gem "capistrano-ext", :lib => "capistrano"
-  
+  config.gem 'mislav-will_paginate', :version => '2.3.6', :lib => 'will_paginate', :source => 'http://gems.github.com'
+
   # Load any local configuration that is kept out of source control
   # (e.g. gems, patches).
   if File.exists?(File.join(File.dirname(__FILE__), 'additional_environment.rb'))

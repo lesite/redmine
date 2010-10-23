@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class RedmineGlobalProjectViewTest < ActiveSupport::TestCase
+class RedmineGlobalRoadmapTest < ActiveSupport::TestCase
   # Replace this with your real tests.
   test "the truth" do
     assert true
