@@ -6,7 +6,7 @@ class GlobalRoadmapController < ApplicationController
     @items = []
     @projects.map { |project|
       versions, issues_by_version = get_versions(project)
-      @items << { :project => project, :versions => versions, :issues_by_version => issues_by_version }
+      @items << { :project => project, :versions => versions, :issues_by_version => issues_by_version } if versions.present?
     }
   end
   
