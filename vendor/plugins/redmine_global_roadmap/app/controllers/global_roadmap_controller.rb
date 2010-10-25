@@ -2,9 +2,9 @@ class GlobalRoadmapController < ApplicationController
   unloadable
 
   def index
-    projects = Project.visible.paginate(:all, :include => :trackers, :order => "trackers.position ASC",:per_page=>10,:page=>params[:page])
+    @projects = Project.visible.find(:all, :include => :trackers, :order => "projects.created_on DESC")
     @items = []
-    projects.map { |project|
+    @projects.map { |project|
       versions, issues_by_version = get_versions(project)
       @items << { :project => project, :versions => versions, :issues_by_version => issues_by_version }
     }
