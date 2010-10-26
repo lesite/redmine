@@ -4,14 +4,12 @@
 
 <h1><%= l(:global_roadmap) %></h1>
 
-<br /><br />
+<br />
+
+<br /><%= will_paginate @versions %><br /><br />
 
 <div id="roadmap">
-	<% @items.each do |item| -%>
-		<h2><%= item[:project].name %></h2>
-		<% item[:versions].each do |version| -%>
-			<%= render "version", :version => version, :project => item[:project], :issues_by_version => item[:issues_by_version] %>
-		<% end -%>
-		<br /><br />
-	<% end -%>
+	<%= render :partial => "global_roadmap/version", :collection => @versions %>
 </div>
+
+<br /><%= will_paginate @versions %><br />
