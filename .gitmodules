@@ -1,0 +1,21 @@
+[submodule "vendor/plugins/attachment_fu"]
+	path = vendor/plugins/attachment_fu
+	url = git://github.com/technoweenie/attachment_fu.git
+[submodule "vendor/plugins/redmine_bugcloud"]
+	path = vendor/plugins/redmine_bugcloud
+	url = http://github.com/maedana/redmine_bugcloud.git
+[submodule "vendor/plugins/redmine_document_approval"]
+	path = vendor/plugins/redmine_document_approval
+	url = git://github.com/vaz/redmine_document_approval.git
+[submodule "vendor/plugins/redmine_graphs"]
+	path = vendor/plugins/redmine_graphs
+	url = git://github.com/bradbeattie/redmine-graphs-plugin.git
+[submodule "vendor/plugins/redmine_issues_done_ratio_both"]
+	path = vendor/plugins/redmine_issues_done_ratio_both
+	url = git://github.com/vaz/redmine_issue_done_ratio_both.git
+[submodule "vendor/plugins/redmine_schedules"]
+	path = vendor/plugins/redmine_schedules
+	url = git://github.com/vaz/redmine-schedules-plugin.git
+[submodule "vendor/plugins/redmine_time_tracker"]
+	path = vendor/plugins/redmine_time_tracker
+	url = http://github.com/delaitre/redmine_time_tracker.git
