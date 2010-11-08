@@ -4,3 +4,25 @@ dt {
 dd {
 	margin-left: 0;
 }
+div#active_projects {
+  float: right;
+  background-color: white;
+  margin: 15px;
+  border: 1px solid #CCC;
+  padding: 7px;
+  width: 235px;
+}
+div#active_projects ul {
+  padding-left: 0px;
+  list-style-type: none;
+}
+div#active_projects li {
+  padding: 3px;
+  border: 1px solid #CCC;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 0;
+}
+div#roadmap {
+ width: 900px;  
+}

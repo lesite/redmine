@@ -8,6 +8,16 @@
 
 <br /><%= will_paginate @versions %><br /><br />
 
+<div id="active_projects">
+	<h2><%= @active_projects.size %> Active Projects</h2>
+	<p>All projects listed below have open deliverables.</p>
+	<ul>
+	<% @active_projects.each do |project| -%>
+		<li><%= link_to project.name, project %></li>
+	<% end -%>
+	</ul>
+</div>
+
 <div id="roadmap">
 	<%= render :partial => "global_roadmap/version", :collection => @versions %>
 </div>
