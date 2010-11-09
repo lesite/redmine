@@ -1,0 +1,53 @@
+<%- session_key = ActionController::Base.session_options[:key] %>
+
+<% content_for :header_tags do %>
+	<link href="/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+  <%= stylesheet_link_tag 'uploadify', :plugin => 'redmine_uploadify_documents' %>
+	<script type="text/javascript" src="/uploadify/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="/uploadify/swfobject.js"></script>
+	<script type="text/javascript" src="/uploadify/jquery.uploadify.v2.1.4.min.js"></script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		
+		jQuery(document).ready(function() {
+			var token = encodeURIComponent(encodeURIComponent(jQuery('[name=authenticity_token]').val()));
+			
+		  jQuery('#file_upload').uploadify({
+				'onComplete': function(event, ID, fileObj, response, data) {
+					addAttachmentFields(fileObj, response);
+				},			
+		    'uploader'  : '/uploadify/uploadify.swf',
+		    'script'    : '/uploads/create',
+		    'cancelImg' : '/uploadify/cancel.png',
+		    'folder'    : '/uploads',
+		    'auto'      : true,
+				'scriptData': { 
+					'<%= session_key %>' : encodeURIComponent('<%= u cookies[session_key] %>'),
+					authenticity_token : token
+					}
+		  });
+		
+		});
+		
+		function addAttachmentFields(file, response) {
+			var attachment = eval('(' + response + ')');
+			var i = new Date();
+			var index = i.getTime();
+
+			jQuery("#added_attachments").append("<div class='added_attachment'><p>Attachment " + attachment.id + ": " + attachment.filename + "</p>\
+			<input type='hidden' name='attachments["+index+"][id]' value='"+attachment.id+"'/>\
+			<p><label>Description</label>\
+			<input type='text' size='60' name='attachments["+index+"][description]'/></p>\
+			</div>\
+			")
+		}
+		
+	</script>
+	
+<% end -%>
+
+<span id="attachments_fields">
+	<input id="file_upload" name="file_upload" type="file" />
+</span>
+
+<div id="added_attachments"></div>
