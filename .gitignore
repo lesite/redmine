@@ -1,4 +1,3 @@
-/config/additional_environment.rb
 /config/email.yml
 /coverage
 /db/*.db
