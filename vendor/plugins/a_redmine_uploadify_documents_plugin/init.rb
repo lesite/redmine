@@ -2,7 +2,7 @@
  
 require 'redmine'
 
-Redmine::Plugin.register :redmine_uploadify_documents do
+Redmine::Plugin.register :a_redmine_uploadify_documents_plugin do
  name 'Document Uploadify Documents'
  author 'Gordon B. Isnor'
  description 'Uploadify for documents'

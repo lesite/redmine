@@ -51,9 +51,6 @@ Rails::Initializer.run do |config|
   config.action_mailer.perform_deliveries = false
 
   config.gem 'rubytree', :lib => 'tree'
-  config.gem 'i18n', :version => '0.3.7'
-  config.gem "capistrano-ext", :lib => "capistrano"
-  config.gem 'mislav-will_paginate', :version => '2.3.6', :lib => 'will_paginate', :source => 'http://gems.github.com'
 
   # Load any local configuration that is kept out of source control
   # (e.g. gems, patches).
