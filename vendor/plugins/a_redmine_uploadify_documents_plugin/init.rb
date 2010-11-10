@@ -7,6 +7,6 @@ Redmine::Plugin.register :a_redmine_uploadify_documents_plugin do
  author 'Gordon B. Isnor'
  description 'Uploadify for documents'
  version '0.0.1'
- permission :manage_uploadify_documents, {:uploadify_documents => [:new, :add_attachment]}, :public => true # :require => :loggedin
+ permission :manage_uploadify_documents, {:uploadify_documents => [:new, :add_attachment]}, :require => :loggedin
 
 end
