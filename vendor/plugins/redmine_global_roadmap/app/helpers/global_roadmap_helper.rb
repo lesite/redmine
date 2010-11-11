@@ -12,5 +12,5 @@ module GlobalRoadmapHelper
       :order => "#{Project.table_name}.lft, #{Tracker.table_name}.position, #{Issue.table_name}.id"
       )
   end
-  
+    
 end
