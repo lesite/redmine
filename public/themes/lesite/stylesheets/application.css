@@ -96,3 +96,5 @@ h1 {
 .powered_by {
   display: block;
 }
+
+a.Boilerplates { background-image: url(/images/changeset.png); }

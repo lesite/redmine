@@ -1,0 +1,16 @@
+<% form_for @boilerplate do |f| -%>
+	<%= error_messages_for :boilerplate %>
+	<% if @boilerplate.new_record? -%>
+	<p>
+		<%= f.label :tracker_id, "Tracker" %><br />
+		<%= f.select :tracker_id, Boilerplate.trackers_that_need_boilerplate.collect{|t| [t.name,t.id] } %>
+	</p>
+	<% else -%>
+		<h3><%= @boilerplate.tracker.name %></h3>
+	<% end -%>
+	<p>
+		<%= f.label :content %><br />
+		<%= f.text_area :content %>
+	</p>
+	<p><%= f.submit "Save" %></p>
+<% end -%>
