@@ -44,6 +44,8 @@
 
 <% end %>
 
+<% if @issue.new_record? %>
 <script>
 	$("issue_description").update('<%= escape_javascript(Boilerplate.content(@issue.tracker_id)) %>')
 </script>
+<% end %>
