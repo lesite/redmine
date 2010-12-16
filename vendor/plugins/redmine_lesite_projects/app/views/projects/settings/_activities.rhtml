@@ -1,0 +1,76 @@
+<% form_tag("/lesite_projects_update_activities/#{@project.id}", :method => :put, :class => "tabular") do %>
+<table class="list">
+  <thead><tr>
+    <th><%= l(:field_name) %></th>
+    <th><%= l(:enumeration_system_activity) %></th>
+    <% TimeEntryActivity.new.available_custom_fields.each do |value| %>
+	<th><%= h value.name %></th>
+    <% end %>
+    <th style="width:15%;"><%= l(:field_active) %></th>
+  </tr></thead>
+
+  <% @project.activities(true).each do |enumeration| %>
+  <% fields_for "enumerations[#{enumeration.id}]", enumeration do |ff| %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td>
+      <%= ff.hidden_field :parent_id, :value => enumeration.id unless enumeration.project %>
+      <%= h(enumeration) %>
+    </td>
+    <td align="center" style="width:15%;"><%= checked_image !enumeration.project %></td>
+    <% enumeration.custom_field_values.each do |value| %>
+	<td align="center">
+      <%= custom_field_tag "enumerations[#{enumeration.id}]", value %>
+    </td>
+    <% end %>
+    <td align="center" style="width:15%;">
+      <%= ff.check_box :active, :class => "activities", :'data-target' => "activity_hours_container_#{enumeration.id}" %>
+    </td>
+  </tr>
+  <% end %>
+  <% end %>
+</table>
+
+<br />
+
+<fieldset style="clear:both">
+	<legend>Estimated Activity Hours</legend>
+
+	<% @project.activities(true).each do |enumeration| %>
+		<p id="activity_hours_container_<%= enumeration.id %>" <%= "style='display:none'" if !@project.activities.include?(enumeration) %>>
+			<label for="activity_hours_<%= enumeration.id %>">
+				<%= enumeration.name %>
+			</label>
+			<input type="text" id="activity_hours_<%= enumeration.id %>" size="5" name="activity_hours[<%= enumeration.id %>]" <%= "disabled='disabled'" if !@project.activities.include?(enumeration) %> value="<%= EstimatedActivityHour.get_hours(@project.id, enumeration.id) %>"/>
+		</p>
+<% end -%>
+</fieldset>
+
+<br /><br />
+
+<div class="contextual">
+<%= link_to(l(:button_reset), project_project_enumerations_path(@project),
+						:method => :delete,
+						:confirm => l(:text_are_you_sure),
+            :class => 'icon icon-del') %>
+</div>
+
+<%= submit_tag l(:button_save) %>
+
+<% end %>
+
+<script>
+  
+Event.observe(window, 'load',
+  function() { 
+    $$('input.activities').each(function(element) {
+      Event.observe(element, 'click', function (e) { 
+				var target = $(this.id).readAttribute("data-target");
+				$(target).toggle();
+				var field = $$("#"+target + " input").first();
+				if(field.readAttribute("disabled")==null) { field.disable(); } else { field.enable(); }
+	 		});
+    });
+  }
+);
+
+</script>

@@ -13,6 +13,6 @@ Redmine::Plugin.register :redmine_global_roadmap do
   end
  
   # Creating menu entry. It appears in project menu as the last entry.
-  menu :top_menu, :global_roadmap, { :controller => 'global_roadmap', :action => 'index' }, :caption => :global_roadmap, :last => true
+  menu :top_menu, :global_roadmap, { :controller => 'global_roadmap', :action => 'index' }, :caption => :global_roadmap
 end
 

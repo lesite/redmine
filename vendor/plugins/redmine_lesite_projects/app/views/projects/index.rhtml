@@ -1,0 +1,68 @@
+<% content_for :header_tags do %>
+    <%= auto_discovery_link_tag(:atom, {:action => 'index', :format => 'atom', :key => User.current.rss_key}) %>
+		<%= stylesheet_link_tag 'redmine_lesite_projects', :plugin => 'redmine_lesite_projects' %>
+		<%= javascript_include_tag 'tablekit', :plugin => 'redmine_lesite_projects' %>
+<% end %>
+
+<div class="contextual">
+		<%= render :partial => "projects/new_from_boilerplate" %>
+    <%= link_to(l(:label_project_new), {:controller => 'projects', :action => 'new'}, :class => 'icon icon-add') + ' |' if User.current.allowed_to?(:add_project, nil, :global => true) %>
+    <%= link_to(l(:label_issue_view_all), { :controller => 'issues' }) + ' |' if User.current.allowed_to?(:view_issues, nil, :global => true) %>
+    <%= link_to(l(:label_overall_spent_time), { :controller => 'time_entries' }) + ' |' if User.current.allowed_to?(:view_time_entries, nil, :global => true) %>
+    <%= link_to l(:label_overall_activity), { :controller => 'activities', :action => 'index' }%>
+</div>
+
+<h2><%=l(:label_project_plural)%></h2>
+
+<table id="projects" cellspacing="0" cellpadding="0" class="sortable">
+	<thead>
+		<tr>
+			<th>Project</th>
+			<th>Phase</th>
+			<th>Deadline</th>
+			<th>Due In</th>
+			<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
+				<th>Estimated <%= activity.name %></th>
+			<% end -%>
+			<th>Estimated QA</th>
+			<th>Estimated management</th>
+			<th>Estimated total</th>
+			<th>Notes</th>
+		</tr>
+	</thead>
+	<tbody>
+	<% @projects.each do |project| %>
+		<tr class="<%= project.root? ? 'root' : nil %>">
+			<td class="<%= User.current.member_of?(project) ? 'my-project' : nil %>">
+				<%= project.ancestors.map { |a| "#{a.name} &#187; " } %>
+				<%= link_to project.name, project %>
+			</td>
+			<td><%= project.phase %></td>
+			<td><%= project.deadline %></td>
+			<td>
+				<%= "#{project.deadline < Date.today ? :"Overdue By" : "Due In"}"+ distance_of_date_in_words(Date.today, project.deadline) if project.deadline.present? %>
+	      
+			</td>
+			<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
+				<td><%= EstimatedActivityHour.get_hours(project.id, activity.id) %></td>
+			<% end -%>
+			<td><%= EstimatedActivityHour.qa(project.id) %></td>
+			<td><%= EstimatedActivityHour.management(project.id) %></td>
+			<td><%= EstimatedActivityHour.total(project.id) %></td>
+			<td><%= project.notes %></td>
+		</tr>
+	<% end -%>
+	</tbody>
+</table>
+
+<% if User.current.logged? %>
+<p style="text-align:right;">
+<span class="my-project"><%= l(:label_my_projects) %></span>
+</p>
+<% end %>
+
+<% other_formats_links do |f| %>
+	<%= f.link_to 'Atom', :url => {:key => User.current.rss_key} %>
+<% end %>
+
+<% html_title(l(:label_project_plural)) -%>

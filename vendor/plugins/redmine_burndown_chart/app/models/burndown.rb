@@ -4,7 +4,7 @@ class Burndown
 
     args.each_pair {|k,v| args[k] = v.join(",") if v.is_a?(Array) }
 
-    %{<img src='http://chart.apis.google.com/chart?chs=#{args[:width]}x#{args[:height]}&chtt=#{args[:title]}&cht=lc&chdl=estimated|actual&chco=#{args[:colors]}&chxr=#{args[:x_range]}|#{args[:y_range]}&chds=#{args[:min_max]}&chd=t:#{args[:x_data]}|#{args[:y_data]}&chg=#{args[:grid]}&chma=#{args[:margins]}&chxt=#{args[:visible_axes]}
+    %{<img src='http://chart.apis.google.com/chart?&chxl=100:|Open+Issues&chs=#{args[:width]}x#{args[:height]}&chtt=#{args[:title]}&cht=lc&chdl=ideal|actual&chco=#{args[:colors]}&chxr=#{args[:x_range]}|#{args[:y_range]}&chds=#{args[:min_max]}&chd=t:#{args[:x_data]}|#{args[:y_data]}&chg=#{args[:grid]}&chma=#{args[:margins]}&chxt=#{args[:visible_axes]}
     '/>}
     
   end
