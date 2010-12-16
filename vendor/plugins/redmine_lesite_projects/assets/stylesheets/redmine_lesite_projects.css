@@ -1,0 +1,43 @@
+table#projects {
+  border-collapse: collapse;
+}
+table#projects tr.root td {
+  border-top-width: 1px;
+  border-top-color: #333;
+}
+table#projects tr td {
+  padding-left: 14px;
+}
+table#projects tr.root td:first-child {
+  padding-left: 7px;
+}
+table#projects th, table#projects td {
+  text-align: left!important;
+  padding: 3px;
+  border: 1px solid #DDD;
+  border-collapse: collapse;
+}
+
+table#projects  th {
+  font-weight: normal;
+  background-color: #555;
+  color: white;
+}
+
+.sortcol {
+	cursor: pointer;
+	padding-right: 20px;
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+.sortasc {
+	background-color: #DDFFAC;
+	background-image: url("/plugin_assets/redmine_lesite_projects/images/up.gif")!important;	
+}
+.sortdesc {
+	background-color: #B9DDFF;
+	background-image: url("/plugin_assets/redmine_lesite_projects/images/down.gif")!important;	
+}
+.nosort {
+	cursor: default;
+}

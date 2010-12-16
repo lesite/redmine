@@ -18,10 +18,14 @@
 <p><%= link_to l(:label_attachment_new), {}, :onclick => "Element.show('add_attachment_form'); Element.hide(this); Element.scrollTo('add_attachment_form'); return false;",
                                              :id => 'attach_files_link' %></p>
   <% form_tag({ :controller => 'uploadify_documents', :action => 'add_attachment', :id => @document }, :multipart => true, :id => "add_attachment_form", :style => "display:none;") do %>
+
   <div class="box">
+		<p><em>*Note that you must press the “I’m Done” button when you are completed to save document and any  files that you have uploaded. Descriptions can be added in the provided fields as soon as file have been uploaded.</em></p>
+	
   <p><%= render :partial => 'attachments/form' %></p>
   </div>
-  <%= submit_tag l(:button_add) %>
+	<input type="image" src="/themes/lesite/images/im_done.png"/>
+	<br /><br />
   <% end %> 
 <% end %>
 

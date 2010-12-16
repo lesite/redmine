@@ -1,0 +1,8 @@
+<span class="icon icon-copy">New From Boilerplate</span>
+<select id="boilerplates" onchange="boilerplate(this)">
+	<option value="">Please select....</option>
+	<% Project.find(:all,:conditions=>{:boilerplate => true}).each do |project| %>
+		<option value="<%= project.identifier %>"><%= project.name %></option>
+	<% end %>
+</select>
+<script>function boilerplate(item) { window.location = "/projects/" + item.value + "/copy"; }</script>

@@ -4,6 +4,8 @@
 
 <h1><%= l(:global_roadmap) %></h1>
 
+<%= Burndown.chart %>
+
 <br />
 
 <br /><%= will_paginate @versions %><br /><br />
@@ -23,5 +25,3 @@
 </div>
 
 <br /><%= will_paginate @versions %><br />
-
-<%= Burndown.chart %>

@@ -7,13 +7,16 @@
 
 <div id="add-document" style="display:none;">
 <h2><%=l(:label_document_new)%></h2>
+<p><em>*Note that you must press the “I’m Done” button when you are completed to save document and any  files that you have uploaded. Descriptions can be added in the provided fields as soon as file have been uploaded.</em></p>
+
 <% form_tag({:controller => 'uploadify_documents', :action => 'new', :project_id => @project}, :class => "tabular", :multipart => true) do %>
 <%= render :partial => 'documents/form' %>
 <div class="box">
 <p><label><%=l(:label_attachment_plural)%></label><%= render :partial => 'attachments/form' %></p>
 </div>
-<%= submit_tag l(:button_create) %>
+<input type="image" src="/themes/lesite/images/im_done.png"/>
 <%= link_to l(:button_cancel), "#", :onclick => 'Element.hide("add-document")' %>
+<br /><br />
 <% end %>
 </div>
 

@@ -97,4 +97,14 @@ h1 {
   display: block;
 }
 
-a.Boilerplates { background-image: url(/images/changeset.png); }
+a.Boilerplates { 
+  background-image: url(/images/changeset.png); 
+}
+
+a.help {
+  display: block;
+  text-align: right;
+  margin-right: 20px;
+  margin-top: 40px;
+  font-size: 11px!important;
+}
