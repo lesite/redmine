@@ -26,3 +26,6 @@ div#active_projects li {
 div#roadmap {
  width: 840px;  
 }
+table.list {
+  width: auto;
+}
