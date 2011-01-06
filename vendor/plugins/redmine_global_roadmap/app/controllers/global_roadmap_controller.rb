@@ -8,7 +8,7 @@ class GlobalRoadmapController < ApplicationController
     @active_projects = Project.find(
       :all, 
       :order => "versions.effective_date ASC, name ASC", 
-      :joins => { :issues => :status },
+      :joins => [{ :issues => :status },:versions],
       :conditions => ["#{IssueStatus.table_name}.is_closed = ? AND issues.tracker_id=5", false],
       :group => "projects.id",
       :select => "projects.*"
