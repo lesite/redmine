@@ -22,6 +22,7 @@ table#projects  th {
   font-weight: normal;
   background-color: #555;
   color: white;
+  vertical-align: top;
 }
 
 .sortcol {
@@ -40,4 +41,10 @@ table#projects  th {
 }
 .nosort {
 	cursor: default;
+}
+.red {
+  color: red;
+}
+.bold {
+  font-weight: bold;
 }

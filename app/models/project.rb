@@ -16,6 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class Project < ActiveRecord::Base 
+    
   # Project statuses
   STATUS_ACTIVE     = 1
   STATUS_ARCHIVED   = 9
@@ -80,7 +81,7 @@ class Project < ActiveRecord::Base
   named_scope :active, { :conditions => "#{Project.table_name}.status = #{STATUS_ACTIVE}"}
   named_scope :all_public, { :conditions => { :is_public => true } }
   named_scope :visible, lambda { { :conditions => Project.visible_by(User.current) } }
-  
+    
   def identifier=(identifier)
     super unless identifier_frozen?
   end

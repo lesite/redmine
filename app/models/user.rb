@@ -18,7 +18,6 @@
 require "digest/sha1"
 
 class User < Principal
-
   # Account statuses
   STATUS_ANONYMOUS  = 0
   STATUS_ACTIVE     = 1
