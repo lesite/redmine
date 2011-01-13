@@ -22,7 +22,10 @@
 			<th>Deadline</th>
 			<th>Due In</th>
 			<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
-				<th>Estimated <%= activity.name %></th>
+				<th>
+					<%= activity.name %><br />Budget<br />
+					<span style="font-size:smaller">(used/estimated)</span>
+				</th>
 			<% end -%>
 			<th>Estimated QA</th>
 			<th>Estimated management</th>
@@ -41,10 +44,9 @@
 			<td><%= project.deadline %></td>
 			<td>
 				<%= "#{project.deadline < Date.today ? :"Overdue By" : "Due In"}"+ distance_of_date_in_words(Date.today, project.deadline) if project.deadline.present? %>
-	      
 			</td>
 			<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
-				<td><%= EstimatedActivityHour.get_hours(project.id, activity.id) %></td>
+				<td><%= EstimatedActivityHour.used_over_estimated(project,activity) %></td>
 			<% end -%>
 			<td><%= EstimatedActivityHour.qa(project.id) %></td>
 			<td><%= EstimatedActivityHour.management(project.id) %></td>
