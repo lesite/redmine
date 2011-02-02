@@ -1,0 +1,17 @@
+<% content_for :header_tags do %>
+	<%= stylesheet_link_tag 'redmine_burndown_chart', :plugin => 'redmine_burndown_chart' %>
+	<%= javascript_include_tag 'redmine_burndown_chart', :plugin => 'redmine_burndown_chart' %>
+<% end %>
+
+<br />
+
+<div class="burndown_range">
+	<label for="burndown_range">Set Burndown Range</label>
+  <select id="burndown_range">
+		<option value="30" <%= "selected='selected'" if params[:days] == "30" %>>Last Month</option>
+    <option value="7" <%= "selected='selected'" if params[:days] == "7" %>>Last Week</option>
+    <option value="15" <%= "selected='selected'" if params[:days] == "15" %>>Last Two Weeks</option>
+   </select>
+</div>
+
+<img src='<%= Burndown.chart(@project, (params[:days]||30).to_i) %>'/>  

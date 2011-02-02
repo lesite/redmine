@@ -4,16 +4,11 @@
 
 <h1><%= l(:global_roadmap) %></h1>
 
-<%# step_value = Issue.count / 15  %>
-<%#= Burndown.chart({:y_range => [1, 0, Issue.count, step_value]}) %>
-
-<br />
-
 <br /><%= will_paginate @versions %><br /><br />
 
 <div id="active_projects">
 	<h2><%= @active_projects.size %> Active Projects</h2>
-	<p>All projects listed below have open deliverables.</p>
+	<p>All projects listed below have open issues.</p>
 	<ul>
 	<% @active_projects.each do |project| -%>
 		<li><%= link_to project.name, project %></li>

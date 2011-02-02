@@ -48,3 +48,6 @@ table#projects  th {
 .bold {
   font-weight: bold;
 }
+td.my-project {
+  padding-left: 20px!important;
+}
