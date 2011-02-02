@@ -34,7 +34,7 @@ class BoilerplatesController < ApplicationController
   
   def destroy
     @boilerplate.destroy
-    flash[:notice] = "Boilerplate Destroyed"
+    flash[:notice] = "Template Destroyed"
     redirect_to boilerplates_path  
   end
     

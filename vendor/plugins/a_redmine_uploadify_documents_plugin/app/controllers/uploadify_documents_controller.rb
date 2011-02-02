@@ -17,6 +17,15 @@ class UploadifyDocumentsController < ApplicationController
     end
   end
 
+  def edit
+    @document= Document.find(params[:id])
+    @categories = DocumentCategory.all
+    if request.post? and @document.update_attributes(params[:document])
+      flash[:notice] = l(:notice_successful_update)
+      redirect_to :controller => "documents", :action => 'show', :id => @document
+    end
+  end
+
   def add_attachment
     @document = Document.find(params[:id])
     @attachments = add_attachments

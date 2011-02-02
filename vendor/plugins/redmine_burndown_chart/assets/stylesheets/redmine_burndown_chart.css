@@ -1,0 +1,13 @@
+.issues_label {
+  float: left;
+  height: 150px;
+  padding-top: 150px
+}
+.days_label {
+  clear: both;
+  width: 800px;
+  text-align: center;
+}
+div.burndown_range {
+  margin-bottom: 10px;
+}

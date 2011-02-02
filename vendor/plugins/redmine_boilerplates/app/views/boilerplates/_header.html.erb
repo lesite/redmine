@@ -1,12 +1,12 @@
 <div class="contextual">
-		<%= link_to "View All Boilerplates", boilerplates_path %>
+		<%= link_to "View All Templates", boilerplates_path %>
 		<% if Boilerplate.trackers_that_need_boilerplate.present? -%> | 
-		<%= link_to "New Boilerplate", new_boilerplate_path, :class => "icon icon-add"  %> 
+		<%= link_to "New Template", new_boilerplate_path, :class => "icon icon-add"  %> 
 		<% end -%>
 		<% if action_name == "edit" %>
 		| 
-			<%= link_to "Delete This Boilerplate", @boilerplate, :method => :delete, :confirm => "Are you sure?", :class => "icon icon-del"  %> 
+			<%= link_to "Delete This Template", @boilerplate, :method => :delete, :confirm => "Are you sure?", :class => "icon icon-del"  %> 
 		<% end %>
 </div>
 
-<h2>Boilerplates</h2>
+<h2>Templates</h2>

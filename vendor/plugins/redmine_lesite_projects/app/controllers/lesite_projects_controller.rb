@@ -1,7 +1,7 @@
 class LesiteProjectsController < ApplicationController  
   unloadable
   before_filter :find_project_by_project_id
-  
+    
   def update_activities
     if request.put? && params[:enumerations]
       Project.transaction do
