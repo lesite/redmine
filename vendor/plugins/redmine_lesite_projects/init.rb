@@ -1,5 +1,11 @@
 require 'redmine'
 
+require 'project_patch'
+
+Dispatcher.to_prepare do
+  Project.send(:include, ProjectPatch) unless Project.included_modules.include? ProjectPatch
+end
+
 Redmine::Plugin.register :redmine_lesite_projects do
   name 'Redmine Lesite Projects plugin'
   author 'Gordon B. Isnor'
