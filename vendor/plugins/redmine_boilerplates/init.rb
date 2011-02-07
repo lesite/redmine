@@ -8,7 +8,7 @@ Redmine::Plugin.register :redmine_boilerplates do
 
     requires_redmine :version_or_higher => '0.9.0'
 
-    menu :admin_menu, 'Boilerplates', "/boilerplates"
+    menu :admin_menu, 'Templates', "/boilerplates"
 
 end
 

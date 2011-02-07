@@ -1,10 +1,21 @@
+<% session[:show_projects_filter] = "active" if params[:show] == "active" %>
+<% session[:show_projects_filter] = "all" if params[:show] == "all" %>
+<% @projects.reject! { |p| p.status == 9 || !p.has_open_issues? } if params[:show] == "active" || session[:show_projects_filter] == "active" -%>
+
 <% content_for :header_tags do %>
     <%= auto_discovery_link_tag(:atom, {:action => 'index', :format => 'atom', :key => User.current.rss_key}) %>
 		<%= stylesheet_link_tag 'redmine_lesite_projects', :plugin => 'redmine_lesite_projects' %>
 		<%= javascript_include_tag 'tablekit', :plugin => 'redmine_lesite_projects' %>
+		<%= javascript_include_tag 'jquery-1.3.2.min.js', :plugin => 'redmine_schedules'  %>
+		<%= javascript_include_tag "projects_index", :plugin => "redmine_lesite_projects" %>
 <% end %>
 
 <div class="contextual">
+		Show 
+			<select id="show_filter">
+				<option value="active" <%= "selected='selected'" if params[:show]=='active' || session[:show_projects_filter] == "active" %>>Active</option>
+				<option value="all" <%= "selected='selected'" if params[:show]=='all' || params[:show].blank? && session[:show_projects_filter] != "active" %>>All</option>
+			</select>
 		<%= render :partial => "projects/new_from_boilerplate" %>
     <%= link_to(l(:label_project_new), {:controller => 'projects', :action => 'new'}, :class => 'icon icon-add') + ' |' if User.current.allowed_to?(:add_project, nil, :global => true) %>
     <%= link_to(l(:label_issue_view_all), { :controller => 'issues' }) + ' |' if User.current.allowed_to?(:view_issues, nil, :global => true) %>
@@ -27,8 +38,6 @@
 					<span style="font-size:smaller">(used/estimated)</span>
 				</th>
 			<% end -%>
-			<th>Estimated QA</th>
-			<th>Estimated management</th>
 			<th>Estimated total</th>
 			<th>Notes</th>
 		</tr>
@@ -43,13 +52,11 @@
 			<td><%= project.phase %></td>
 			<td><%= project.deadline %></td>
 			<td>
-				<%= "#{project.deadline < Date.today ? :"Overdue By" : "Due In"}"+ distance_of_date_in_words(Date.today, project.deadline) if project.deadline.present? %>
+				<%= "#{project.deadline < Date.today ? :"Overdue By " : "Due In "}" + distance_of_date_in_words(Date.today, project.deadline) if project.deadline.present? %>
 			</td>
 			<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
 				<td><%= EstimatedActivityHour.used_over_estimated(project,activity) %></td>
 			<% end -%>
-			<td><%= EstimatedActivityHour.qa(project.id) %></td>
-			<td><%= EstimatedActivityHour.management(project.id) %></td>
 			<td><%= EstimatedActivityHour.total(project.id) %></td>
 			<td><%= project.notes %></td>
 		</tr>
