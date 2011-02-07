@@ -1,41 +1,40 @@
 class Burndown
   
-  def self.chart args
-
-    args = Burndown::DEFAULTS.merge(args)
-    
-    args.each_pair {|k,v| args[k] = v.join(",") if v.is_a?(Array) }
-
-    %{<br />
-      <div>
-        <label for="burndown_range"></label>
-        <select id="burndown_range">
-          <option value="last_week">Last Week</option>
-          <option value="last_two_weeks">Last Two Weeks</option>
-          <option value="last_month">Last Month</option>
-        </select>
-      </div>
-      <div style="float:left;height:150px;padding-top:150px">Open<br/>Issues</div>
-      <img src='http://chart.apis.google.com/chart?&chxl=100:|Open+Issues&chs=#{args[:width]}x#{args[:height]}&chtt=#{args[:title]}&cht=lc&chdl=ideal|actual&chco=#{args[:colors]}&chxr=#{args[:x_range]}|#{args[:y_range]}&chds=#{args[:min_max]}&chd=t:#{args[:x_data]}|#{args[:y_data]}&chg=#{args[:grid]}&chma=#{args[:margins]}&chxt=#{args[:visible_axes]}
-    '/>  <div style="clear:both;width:800px;text-align:center">Days</div>
-    }
-    
-  end
-  
-  
   DEFAULTS = {
-      :width => 800, 
+      :width => 650, 
       :height => 300, 
       :title => "Burndown", 
-      :x_data => [40,36,32,28,24,20,16,12,8,4,0], 
-      :y_data => [40,36,32,28,24,20,16,12,8,4,0], 
-      :grid => [6,6,1,1,6,6], 
       :margins => [30,30,30,30], 
       :visible_axes => ["x","y"], 
-      :colors => ["FF0000","00FF00"], 
-      :x_range => [0,0,30,2], 
+      :colors => ["FF0000","008E00","0000FF"], 
+      :x_range => [0,0,30], 
       :y_range => [1,0,40,2], 
       :min_max => [0,40] 
     }
+  
+  def self.chart project, days
+    total = project.issues.count
+    args = Burndown::DEFAULTS.merge({
+  	  :remaining => IssueBurndownLog.issues_remaining_in_last_thirty_days(project.id,days),
+  	  :completed => IssueBurndownLog.issues_closed_in_last_thirty_days(project.id,days), 
+      :y_range => [1, 0, total, (total.to_f / 15.to_f).ceil],
+      :ideal => get_ideal(total,days),
+      :min_max => [0,total],
+      :x_range => [0, 0, days, days == 30 ? 2 : 1]
+    })
+    args.each_pair {|k,v| args[k] = v.join(",") if v.is_a?(Array) }   
+    %{http://chart.apis.google.com/chart?chxt=y&chbh=a&cht=bvo&chco=#{args[:colors]}&chd=t1:#{args[:completed]}|#{args[:remaining]}|#{args[:ideal]}&chtt=#{args[:title]}&chxr=#{args[:x_range]}|#{args[:y_range]}&chs=#{args[:width]}x#{args[:height]}&chdl=completed|actual|ideal&chds=#{args[:min_max]}&chma=#{args[:margins]}&chxt=#{args[:visible_axes]}&chm=D,008E00,1,0,1,1|D,0000FF,2,0:29,1,1}
+  end
+  
+  def self.get_ideal(total,days)
+    ideal_step = total.to_f / days.to_f
+    ideal = []
+    current = total.to_f
+    (days -1).times do 
+      ideal << current
+      current = current - ideal_step
+    end
+    ideal << 0
+  end
   
 end
