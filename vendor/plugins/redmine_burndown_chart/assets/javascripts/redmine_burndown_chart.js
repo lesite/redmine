@@ -4,4 +4,6 @@ document.observe("dom:loaded", function() {
     val = element.getValue();
     window.location.href = '?days=' + val;
   });
+    
 });
+

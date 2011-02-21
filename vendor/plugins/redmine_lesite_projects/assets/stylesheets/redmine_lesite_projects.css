@@ -1,3 +1,4 @@
+
 table#projects {
   border-collapse: collapse;
 }
@@ -51,3 +52,27 @@ table#projects  th {
 td.my-project {
   padding-left: 20px!important;
 }
+
+table#projects td, th {
+  border-width: 0!important;
+	font-size: 11px;
+}
+table#projects th {
+	border-width: 1px!important;
+}
+table#projects tr.odd td {
+	background-color: #EEE!important
+}
+table#projects tr td:first-child, 
+table#projects tr td:first-child a {
+	font-weight: bold!important;
+}
+table#projects tr.overdue td.deadline, 
+table#projects tr.overdue td.due_date, 
+td.overbudget {
+	color: red!important;
+}
+
+.deadline_editor { 
+	display: none;
+	}
