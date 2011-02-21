@@ -6,18 +6,7 @@ class EstimatedActivityHour < ActiveRecord::Base
     hours = find(:first, :conditions => {:project_id => project_id, :activity_id => activity_id }, :select => "hours")
     hours.present? ? hours.hours.to_f : 0
   end
-  
-  def self.qa project_id
-    hours = find(:all, :conditions=>{:project_id=>project_id},:select=>"hours")  
-    total = 0
-    if hours.present?
-      hours.map{|x| total = total + x.hours.to_f }
-      (total * 0.1).round.to_i
-    else 
-      nil
-    end
-  end
-  
+    
   def self.used project, activity
     TimeEntry.sum(:hours,:conditions=>{:project_id=>project.id,:activity_id=>activity.id}).to_f.round
   end
@@ -25,11 +14,7 @@ class EstimatedActivityHour < ActiveRecord::Base
   def self.used_over_estimated project, activity
     used = EstimatedActivityHour.used(project,activity)
     est = EstimatedActivityHour.get_hours(project.id, activity.id)
-    "#{used} / #{est}"
-  end
-  
-  def self.management project_id
-    self.qa(project_id)
+    "#{used} / #{est.ceil.to_i}"
   end
       
   def self.total project_id
@@ -37,10 +22,29 @@ class EstimatedActivityHour < ActiveRecord::Base
       total = 0
       if hours.present?
         hours.map{|x| total = total + x.hours.to_f }
-        ((total * 0.1).round.to_i * 2 + total).to_i
+        return total.round
       else 
-        nil
+        0
       end    
+  end
+  
+  def self.total_used project
+    t = TimeEntry.sum(:hours,:conditions=>{:project_id=>project.id}).to_f.round
+    t.present? ? t : 0
+  end
+  
+  def self.total_overbudget? project
+    self.total_used(project) > self.total(project.id)
+  end
+  
+  def self.overbudget? project, activity
+    used = EstimatedActivityHour.used(project,activity)
+    est = EstimatedActivityHour.get_hours(project.id, activity.id)
+    used > est
+  end
+  
+  def self.total_used_over_estimated project
+    "#{self.total_used(project)} / #{self.total(project.id)}"
   end
   
 end

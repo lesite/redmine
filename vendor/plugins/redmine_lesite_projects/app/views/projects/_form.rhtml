@@ -19,7 +19,7 @@
 
 <p><%= f.date_select :deadline %></p>
 <p><%= f.text_field :notes, :size => 100 %></p>
-<p><%= f.select :phase, ["Analysis","Production","Maintenance"] %></p>
+<p><%= f.select :phase, Phase.all.map(&:name) %></p>
 <p><%= f.check_box :boilerplate %></p>
 
 <% @project.custom_field_values.each do |value| %>

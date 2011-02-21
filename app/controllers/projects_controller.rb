@@ -63,6 +63,38 @@ class ProjectsController < ApplicationController
     end
   end
   
+  # LE SITE VERSION
+  def index
+    session[:show_projects_filter] = "active" if params[:show] == "active"
+    session[:show_projects_filter] = "all" if params[:show] == "all"
+    
+    respond_to do |format|
+        format.html { 
+          if params[:show] == "active" || session[:show_projects_filter] == "active"
+            @projects = Project.find(
+              :all, 
+              :order => "versions.effective_date IS NULL, versions.effective_date ASC, name ASC", 
+              :joins => [{ :issues => :status },:versions],
+              :conditions => ["#{IssueStatus.table_name}.is_closed = ? AND issues.tracker_id=5 AND projects.status != 9 AND projects.boilerplate = ?", false, false],
+              :group => "projects.id",
+              :select => "projects.*"
+            )
+          else
+            @projects = Project.visible.find(:all, :order => 'lft') 
+          end
+        }
+        format.xml  {
+          @projects = Project.visible.find(:all, :order => 'lft')
+        }
+        format.atom {
+          projects = Project.visible.find(:all, :order => 'created_on DESC',
+                                                :limit => Setting.feeds_limit.to_i)
+          render_feed(projects, :title => "#{Setting.app_title}: #{l(:label_project_latest)}")
+        }
+      end
+  end
+  
+  
   def new
     @issue_custom_fields = IssueCustomField.find(:all, :order => "#{CustomField.table_name}.position")
     @trackers = Tracker.all

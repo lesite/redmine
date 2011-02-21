@@ -1,6 +1,22 @@
 class LesiteProjectsController < ApplicationController  
   unloadable
-  before_filter :find_project_by_project_id
+  before_filter :find_project_by_project_id, :except => :in_place_edit
+    
+  def in_place_edit
+    target = params[:id].split("_")[0]
+    id = params[:id].split("_")[1]
+    @project = Project.find(id)
+    @project.update_attribute(target,params[:value])
+    if target == 'deadline'
+      if @project.deadline.present?
+        render :text => @project.deadline.strftime("%b %d")
+      else
+        render :text => "Click to edit"
+      end
+    else
+      render :text => @project.send(target)
+    end
+  end  
     
   def update_activities
     if request.put? && params[:enumerations]

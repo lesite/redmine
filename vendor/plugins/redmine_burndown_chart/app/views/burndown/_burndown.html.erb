@@ -1,17 +1,33 @@
 <% content_for :header_tags do %>
 	<%= stylesheet_link_tag 'redmine_burndown_chart', :plugin => 'redmine_burndown_chart' %>
+	<%= javascript_include_tag 'jquery', :plugin => 'redmine_schedules' %>
+	<script>
+	jQuery.noConflict();
+	</script>
 	<%= javascript_include_tag 'redmine_burndown_chart', :plugin => 'redmine_burndown_chart' %>
 <% end %>
 
-<br />
-
-<div class="burndown_range">
-	<label for="burndown_range">Set Burndown Range</label>
-  <select id="burndown_range">
-		<option value="30" <%= "selected='selected'" if params[:days] == "30" %>>Last Month</option>
-    <option value="7" <%= "selected='selected'" if params[:days] == "7" %>>Last Week</option>
-    <option value="15" <%= "selected='selected'" if params[:days] == "15" %>>Last Two Weeks</option>
-   </select>
+<div class="burndown_chart">
+	<div class="hide_show"><a href="#">Burndown</a></div>
+	<div class="burndown">
+		<div class="burndown_range">
+			<label for="burndown_range">Set Burndown Range</label>
+		  <select id="burndown_range">
+				<option value="30" <%= "selected='selected'" if params[:days] == "30" %>>Last Month</option>
+		    <option value="7" <%= "selected='selected'" if params[:days] == "7" %>>Last Week</option>
+		    <option value="15" <%= "selected='selected'" if params[:days] == "15" %>>Last Two Weeks</option>
+		   </select>
+		</div>
+		<div class="y_axis_label">o<br />p<br />e<br />n<br /><br />i<br/>s<br/>s<br/>u<br/>e<br/>s</div>
+		<img src='<%= Burndown.chart(@project, (params[:days]||30).to_i) %>'/> 
+		<div class="x_axis_label">days</div>
+	</div> 
 </div>
 
-<img src='<%= Burndown.chart(@project, (params[:days]||30).to_i) %>'/>  
+<script>
+jQuery(document).ready(function(){
+	jQuery(".hide_show a").click(function(){
+	  jQuery("div.burndown").toggle('fast');	
+	})
+})
+</script>

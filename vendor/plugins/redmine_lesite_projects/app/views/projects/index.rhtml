@@ -1,13 +1,12 @@
-<% session[:show_projects_filter] = "active" if params[:show] == "active" %>
-<% session[:show_projects_filter] = "all" if params[:show] == "all" %>
-<% @projects.reject! { |p| p.status == 9 || !p.has_open_issues? } if params[:show] == "active" || session[:show_projects_filter] == "active" -%>
+<%= calendar_date_select_includes "silver" %>
 
 <% content_for :header_tags do %>
     <%= auto_discovery_link_tag(:atom, {:action => 'index', :format => 'atom', :key => User.current.rss_key}) %>
 		<%= stylesheet_link_tag 'redmine_lesite_projects', :plugin => 'redmine_lesite_projects' %>
 		<%= javascript_include_tag 'tablekit', :plugin => 'redmine_lesite_projects' %>
-		<%= javascript_include_tag 'jquery-1.3.2.min.js', :plugin => 'redmine_schedules'  %>
+		<%= javascript_include_tag 'jquery.js', :plugin => 'redmine_schedules'  %>
 		<%= javascript_include_tag "projects_index", :plugin => "redmine_lesite_projects" %>
+		<%= javascript_include_tag "jeditable", :plugin => "redmine_lesite_projects" %>
 <% end %>
 
 <div class="contextual">
@@ -35,30 +34,50 @@
 			<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
 				<th>
 					<%= activity.name %><br />Budget<br />
-					<span style="font-size:smaller">(used/estimated)</span>
+					<span style="font-size:smaller">(used/est)</span>
 				</th>
 			<% end -%>
-			<th>Estimated total</th>
+			<th>
+				Total Budget<br />
+				<span style="font-size:smaller">(used/est)</span>
+			</th>
 			<th>Notes</th>
 		</tr>
 	</thead>
 	<tbody>
 	<% @projects.each do |project| %>
-		<tr class="<%= project.root? ? 'root' : nil %>">
+		<tr class="<%= project.root? ? 'root' : nil %> <%= cycle('even','odd') %> <%= project.deadline_passed? ? 'overdue' : nil %>">
 			<td class="<%= User.current.member_of?(project) ? 'my-project' : nil %>">
 				<%= project.ancestors.map { |a| "#{a.name} &#187; " } %>
-				<%= link_to project.name, project %>
+				<% if project.versions.present? -%>
+					<%= link_to project.name, "/projects/#{project.to_param}/roadmap" %>
+				<% else -%>
+					<%= link_to project.name, project %>
+				<% end -%>
 			</td>
-			<td><%= project.phase %></td>
-			<td><%= project.deadline %></td>
-			<td>
+			<td><div class="edit_select" id="phase_<%= project.id %>"><%= project.phase %></div></td>
+			<td class="deadline">
+				<a href="#" class="edit_deadline">
+					<% if project.deadline.present? -%>
+						<%= project.deadline.strftime("%b %d")  %>
+					<% else -%>
+					 Click to edit
+					<% end -%>
+				</a>
+				<div class="deadline_editor">
+					<%= calendar_date_select_tag "date", @date, :id => "deadline_#{project.id}", :class => "deadline" %>
+					<button id="deadline_<%= project.id %>" class="close_deadline_editor submit_new_deadline">OK</button>
+					<button class="close_deadline_editor">X</button>
+				</div>
+			</td>
+			<td class="due_date">
 				<%= "#{project.deadline < Date.today ? :"Overdue By " : "Due In "}" + distance_of_date_in_words(Date.today, project.deadline) if project.deadline.present? %>
 			</td>
 			<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
-				<td><%= EstimatedActivityHour.used_over_estimated(project,activity) %></td>
+				<td class="<%=EstimatedActivityHour.overbudget?(project,activity) ? 'overbudget' : nil %>"><%= EstimatedActivityHour.used_over_estimated(project,activity) %></td>
 			<% end -%>
-			<td><%= EstimatedActivityHour.total(project.id) %></td>
-			<td><%= project.notes %></td>
+			<td class="<%= EstimatedActivityHour.total_overbudget?(project) ? 'overbudget' : nil %>"><%= EstimatedActivityHour.total_used_over_estimated(project) %></td>
+			<td><div class='edit' id='notes_<%= project.id %>'><%= project.notes %></div></td>
 		</tr>
 	<% end -%>
 	</tbody>
@@ -75,3 +94,13 @@
 <% end %>
 
 <% html_title(l(:label_project_plural)) -%>
+
+<script>
+	jQuery(document).ready(function(){
+		jQuery('.edit_select').editable('lesite_projects/in_place_edit', { 
+	     data   : " {<%= Phase.all.map{ |p| "'#{p.name}':'#{p.name}'" }.join(',') %>}",
+	     type   : 'select',
+	     submit : 'OK'
+	 });
+	})
+</script>
