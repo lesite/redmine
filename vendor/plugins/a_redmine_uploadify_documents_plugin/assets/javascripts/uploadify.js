@@ -13,7 +13,7 @@ RedmineUploadifyDocuments.AddAttachmentFields = function(file, response) {
 		image = '';
 	}
 
-	jQuery("#added_attachments").append("<div class='added_attachment'><p class='attachment_details'>" + image + "\
+	jQuery("#added_attachments").append("<div class='added_attachment'><p class='attachment_details'>\
 	<strong>Attachment " + id + "</strong><br /> " + filename + "</p>\
 	<input type='hidden' name='attachments["+index+"][id]' value='" + id + "'/>\
 	<p><label>Description</label>\
