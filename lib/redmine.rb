@@ -98,10 +98,28 @@ Redmine::AccessControl.map do |map|
   end
 
   map.project_module :documents do |map|
-    map.permission :upload_documents, {:documents => [:new, :add_attachment]}, :require => :loggedin
-    map.permission :manage_documents, {:documents => [ :edit, :destroy]}, :require => :loggedin
-    map.permission :view_documents, :documents => [:index, :show, :download]
+
+    map.permission :upload_documents, {
+      :documents => [:new, :add_attachment],
+      :uploadify_documents => [:new,:add_attachment], 
+      :attachments => [:show], 
+      :uploads => [:create,:new,:add_attachment] 
+      }, :require => :loggedin
+
+    map.permission :manage_documents, {
+      :documents => [ :edit, :destroy],
+      :uploadify_documents => [:edit, :destroy], 
+      :attachments => [:show],
+      :uploads => [:create,:new,:add_attachment] 
+      
+      }, :require => :loggedin
+    map.permission :view_documents, {
+      :documents => [:index, :show, :download],
+      :uploadify_documents => [:show, :index, :download],
+    }
+
   end
+  
   
   map.project_module :files do |map|
     map.permission :manage_files, {:files => [:new, :create]}, :require => :loggedin
