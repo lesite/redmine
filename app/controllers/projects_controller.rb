@@ -75,7 +75,7 @@ class ProjectsController < ApplicationController
               :all, 
               :order => "versions.effective_date IS NULL, versions.effective_date ASC, name ASC", 
               :joins => [{ :issues => :status },:versions],
-              :conditions => ["#{IssueStatus.table_name}.is_closed = ? AND issues.tracker_id=5 AND projects.status != 9 AND projects.boilerplate = ?", false, false],
+              :conditions => ["#{IssueStatus.table_name}.is_closed = ? AND projects.status != 9 AND projects.boilerplate = ?", false, false],
               :group => "projects.id",
               :select => "projects.*"
             )
