@@ -14,6 +14,7 @@ jQuery(document).ready(function(){
 		jQuery(this).next(".deadline_editor").show();
 		jQuery(this).hide();
 		jQuery(this).next(".deadline_editor").find('input').focus();
+		return false;
 	}) 
 	
 	jQuery(".close_deadline_editor").click(function(){
