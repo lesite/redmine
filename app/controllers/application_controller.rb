@@ -19,6 +19,7 @@ require 'uri'
 require 'cgi'
 
 class ApplicationController < ActionController::Base
+  include ExceptionNotification::Notifiable
   include Redmine::I18n
 
   layout 'base'
