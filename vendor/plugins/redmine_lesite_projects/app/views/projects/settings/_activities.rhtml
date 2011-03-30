@@ -43,6 +43,10 @@
 			<input type="text" id="activity_hours_<%= enumeration.id %>" size="5" name="activity_hours[<%= enumeration.id %>]" <%= "disabled='disabled'" if !@project.activities.include?(enumeration) %> value="<%= EstimatedActivityHour.get_hours(@project.id, enumeration.id) %>"/>
 		</p>
 <% end -%>
+<p>
+	<label class="total">Total</label> 
+	<input id="estimated_activity_hours_total" disabled="disabled" size="5"/>
+</p>
 </fieldset>
 
 <br /><br />
