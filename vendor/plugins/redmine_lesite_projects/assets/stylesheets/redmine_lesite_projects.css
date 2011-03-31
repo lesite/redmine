@@ -17,6 +17,8 @@ table#projects th, table#projects td {
   padding: 3px;
   border: 1px solid #DDD;
   border-collapse: collapse;
+  padding-top: 10px!important;
+  padding-bottom: 10px!important;
 }
 
 table#projects  th {
@@ -72,10 +74,14 @@ table#projects tr.overdue td.due_date,
 td.overbudget {
 	color: red!important;
 }
-
 .deadline_editor { 
 	display: none;
-	}
-label.total {
-  color:green
+}
+.total {
+  color: green;
+}
+#estimated_activity_hours_total {
+  font-size: 12px;
+  font-weight: bold;
+  padding-left: 7px;
 }

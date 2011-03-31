@@ -1,0 +1,26 @@
+RedmineLesiteBulkAdjustVersionDeadlines
+=======================================
+
+This plugin adds an iteration length field to project settings form,
+and an “adjust all subsequent versions” checkbox to versions form.
+
+When adjust all subsequent version is checked, the dates of all versions due after the current version will be adjusted.
+Versions with null dates will be assigned dates.
+
+
+Installation Notes
+==================
+* Add a custom field in Projects:
+    Name: Iteration Length In Days
+    Type: Integer
+    Required: True
+    Default: 7
+
+* Add a custom field in Versions:
+		Name: Adjust All Subsequent Versions
+		Type: Boolean
+		For all projects: True
+		Tracker: Deliverable
+
+
+Copyright (c) 2011 Gordon B. Isnor, released under the LGPL license

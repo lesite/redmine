@@ -30,7 +30,7 @@ class WikiPage < ActiveRecord::Base
                 :datetime => :created_on,
                 :url => Proc.new {|o| {:controller => 'wiki', :id => o.wiki.project, :page => o.title}}
 
-  acts_as_searchable :columns => ['title', 'text'],
+  acts_as_searchable :columns => ['title', 'wiki_contents.text'],
                      :include => [{:wiki => :project}, :content],
                      :project_key => "#{Wiki.table_name}.project_id"
 
