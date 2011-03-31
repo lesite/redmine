@@ -41,9 +41,8 @@
 				Total Budget<br />
 				<span style="font-size:smaller">(used/est)</span>
 			</th>
+			<th>Principals</th>
 			<th>Notes</th>
-			<th>Maintainer</th>
-			<th>Coordinator</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -79,9 +78,8 @@
 				<td class="<%=EstimatedActivityHour.overbudget?(project,activity) ? 'overbudget' : nil %>"><%= EstimatedActivityHour.used_over_estimated(project,activity) %></td>
 			<% end -%>
 			<td class="<%= EstimatedActivityHour.total_overbudget?(project) ? 'overbudget' : nil %>"><%= EstimatedActivityHour.total_used_over_estimated(project) %></td>
+			<td><%= project.coordinator_maintainer %></td>
 			<td><div class='edit' id='notes_<%= project.id %>'><%= project.notes %></div></td>
-			<td><%= project %></td>
-			<td><%= project %></td>
 		</tr>
 	<% end -%>
 	</tbody>
