@@ -27,10 +27,11 @@ jQuery(document).ready(function(){
 			jQuery.ajax({ 
 				url: "/lesite_projects/in_place_edit", 
 				type: "POST", 
-				dataType: "text",
+				dataType: "json",
 				data: the_data, 
 				success: function(val) {
-					el.closest(".deadline").find(".edit_deadline").html(val);
+					el.closest(".deadline").find(".edit_deadline").html(val.deadline);
+					el.closest(".project").find(".due_date").html(val.due_date)
 				}
 				
 			})

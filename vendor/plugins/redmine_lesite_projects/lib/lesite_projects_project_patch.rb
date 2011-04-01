@@ -1,6 +1,9 @@
 require_dependency 'project'
+include ActionView::Helpers::DateHelper
+require 'action_view/helpers/date_helper'
 
 module LesiteProjectsProjectPatch
+  
   def self.included(base)
     base.extend(ClassMethods)
     base.send(:include, InstanceMethods)
@@ -13,6 +16,10 @@ module LesiteProjectsProjectPatch
   end
   
   module InstanceMethods
+
+    def lesite_due_date
+      "#{deadline < Date.today ? :"Overdue By " : "Due In "}" + distance_of_date_in_words(Date.today, deadline) if deadline.present?
+    end
     
     def deadline_passed?
       deadline.present? && (deadline < Date.today)

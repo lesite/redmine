@@ -9,7 +9,10 @@ class LesiteProjectsController < ApplicationController
     @project.update_attribute(target,params[:value])
     if target == 'deadline'
       if @project.deadline.present?
-        render :text => @project.deadline.strftime("%b %d")
+        render :json => {
+          :due_date => @project.lesite_due_date, 
+          :deadline => @project.deadline.strftime("%b %d")
+         }
       else
         render :text => "Click to edit"
       end
