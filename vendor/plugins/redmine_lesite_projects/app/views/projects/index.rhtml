@@ -47,7 +47,7 @@
 	</thead>
 	<tbody>
 	<% @projects.each do |project| %>
-		<tr class="<%= project.root? ? 'root' : nil %> <%= cycle('even','odd') %> <%= project.deadline_passed? ? 'overdue' : nil %>">
+		<tr class="project <%= project.root? ? 'root' : nil %> <%= cycle('even','odd') %> <%= project.deadline_passed? ? 'overdue' : nil %>">
 			<td class="<%= User.current.member_of?(project) ? 'my-project' : nil %>">
 				<%= project.ancestors.map { |a| "#{a.name} &#187; " } %>
 				<% if project.versions.present? -%>
@@ -71,13 +71,14 @@
 					<button class="close_deadline_editor">X</button>
 				</div>
 			</td>
-			<td class="due_date">
-				<%= "#{project.deadline < Date.today ? :"Overdue By " : "Due In "}" + distance_of_date_in_words(Date.today, project.deadline) if project.deadline.present? %>
-			</td>
+			
+			<td class="due_date"><%= project.lesite_due_date %></td>
+			
 			<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
 				<td class="<%=EstimatedActivityHour.overbudget?(project,activity) ? 'overbudget' : nil %>"><%= EstimatedActivityHour.used_over_estimated(project,activity) %></td>
 			<% end -%>
 			<td class="<%= EstimatedActivityHour.total_overbudget?(project) ? 'overbudget' : nil %>"><%= EstimatedActivityHour.total_used_over_estimated(project) %></td>
+			
 			<td><%= project.coordinator_maintainer %></td>
 			<td><div class='edit' id='notes_<%= project.id %>'><%= project.notes %></div></td>
 		</tr>

@@ -14,7 +14,7 @@ class EstimatedActivityHour < ActiveRecord::Base
   def self.used_over_estimated project, activity
     used = EstimatedActivityHour.used(project,activity)
     est = EstimatedActivityHour.get_hours(project.id, activity.id)
-    "#{used} / #{est.ceil.to_i}"
+    "#{used} / <strong>#{est.ceil.to_i}</strong>"
   end
       
   def self.total project_id
@@ -44,7 +44,7 @@ class EstimatedActivityHour < ActiveRecord::Base
   end
   
   def self.total_used_over_estimated project
-    "#{self.total_used(project)} / #{self.total(project.id)}"
+    "#{self.total_used(project)} / <strong>#{self.total(project.id)}</strong>"
   end
   
 end
