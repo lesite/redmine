@@ -1,0 +1,3 @@
+Updating Redmine:
+  
+~ $ git pull upstream {branch name eg 1.1-stable}  

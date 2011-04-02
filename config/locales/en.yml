@@ -198,17 +198,10 @@ en:
   mail_body_account_activation_request: "A new user (%{value}) has registered. The account is pending your approval:"
   mail_subject_reminder: "%{count} issue(s) due in the next %{days} days"
   mail_body_reminder: "%{count} issue(s) that are assigned to you are due in the next %{days} days:"
-<<<<<<< HEAD
-  mail_subject_wiki_content_added: "'%{page}' wiki page has been added"
-  mail_body_wiki_content_added: "The '%{page}' wiki page has been added by %{author}."
-  mail_subject_wiki_content_updated: "'%{page}' wiki page has been updated"
-  mail_body_wiki_content_updated: "The '%{page}' wiki page has been updated by %{author}."
-=======
   mail_subject_wiki_content_added: "'%{id}' wiki page has been added"
   mail_body_wiki_content_added: "The '%{id}' wiki page has been added by %{author}."
   mail_subject_wiki_content_updated: "'%{id}' wiki page has been updated"
   mail_body_wiki_content_updated: "The '%{id}' wiki page has been updated by %{author}."
->>>>>>> 12801275a8488afe61b9d14353d1a16ca5329463
   
   gui_validation_error: 1 error
   gui_validation_error_plural: "%{count} errors"
@@ -890,10 +883,7 @@ en:
   text_no_configuration_data: "Roles, trackers, issue statuses and workflow have not been configured yet.\nIt is highly recommended to load the default configuration. You will be able to modify it once loaded."
   text_load_default_configuration: Load the default configuration
   text_status_changed_by_changeset: "Applied in changeset %{value}."
-<<<<<<< HEAD
-=======
   text_time_logged_by_changeset: "Applied in changeset %{value}."
->>>>>>> 12801275a8488afe61b9d14353d1a16ca5329463
   text_issues_destroy_confirmation: 'Are you sure you want to delete the selected issue(s) ?'
   text_select_project_modules: 'Select modules to enable for this project:'
   text_default_administrator_account_changed: Default administrator account changed

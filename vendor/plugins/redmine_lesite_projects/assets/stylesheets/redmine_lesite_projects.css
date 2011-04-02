@@ -1,18 +1,18 @@
 
-table#projects {
+table.projects {
   border-collapse: collapse;
 }
-table#projects tr.root td {
+table.projects tr.root td {
   border-top-width: 1px;
   border-top-color: #333;
 }
-table#projects tr td {
+table.projects tr td {
   padding-left: 14px;
 }
-table#projects tr.root td:first-child {
+table.projects tr.root td:first-child {
   padding-left: 7px;
 }
-table#projects th, table#projects td {
+table.projects th, table.projects td {
   text-align: left!important;
   padding: 3px;
   border: 1px solid #DDD;
@@ -21,7 +21,7 @@ table#projects th, table#projects td {
   padding-bottom: 10px!important;
 }
 
-table#projects  th {
+table.projects  th {
   font-weight: normal;
   background-color: #555;
   color: white;
@@ -55,22 +55,22 @@ td.my-project {
   padding-left: 20px!important;
 }
 
-table#projects td, th {
+table.projects td, th {
   border-width: 0!important;
 	font-size: 11px;
 }
-table#projects th {
+table.projects th {
 	border-width: 1px!important;
 }
-table#projects tr.odd td {
+table.projects tr.odd td {
 	background-color: #EEE!important
 }
-table#projects tr td:first-child, 
-table#projects tr td:first-child a {
+table.projects tr td:first-child, 
+table.projects tr td:first-child a {
 	font-weight: bold!important;
 }
-table#projects tr.overdue td.deadline, 
-table#projects tr.overdue td.due_date, 
+table.projects tr.overdue td.deadline, 
+table.projects tr.overdue td.due_date, 
 td.overbudget {
 	color: red!important;
 }
