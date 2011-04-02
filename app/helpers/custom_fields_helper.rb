@@ -93,7 +93,7 @@ module CustomFieldsHelper
   def show_value(custom_value)
     return "" unless custom_value
     format_value(custom_value.value, custom_value.custom_field.field_format)
-  end
+  end  
   
   # Return a string used to display a custom value
   def format_value(value, field_format)

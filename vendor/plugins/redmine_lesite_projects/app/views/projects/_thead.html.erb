@@ -1,0 +1,18 @@
+<tr>
+	<th class="proj_col">Project</th>
+	<th class="phase_col">Phase</th>
+	<th class="deadline_col">Deadline</th>
+	<th class="due_col">Due In</th>
+	<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
+		<th class="budgets_col">
+			<%= activity.name %><br />Budget<br />
+			<span style="font-size:smaller">(used/est)</span>
+		</th>
+	<% end -%>
+	<th class="budgets_col">
+		Total Budget<br />
+		<span style="font-size:smaller">(used/est)</span>
+	</th>
+	<th class="princ_col">Principals</th>
+	<th class="notes_col">Notes</th>
+</tr>

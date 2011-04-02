@@ -1,3 +1,93 @@
+<style>
+
+table.projects {
+  border-collapse: collapse;
+}
+
+table.projects tr.root td {
+  border-top-width: 1px;
+  border-top-color: #333;
+}
+table.projects tr td {
+  padding-left: 14px;
+}
+table.projects tr.root td:first-child {
+  padding-left: 7px;
+}
+table.projects th, table.projects td {
+  text-align: left!important;
+  padding: 3px;
+  border: 1px solid #DDD;
+  border-collapse: collapse;
+  padding-top: 10px!important;
+  padding-bottom: 10px!important;
+}
+
+table.projects  th {
+  font-weight: normal;
+  background-color: #555;
+  color: white;
+  vertical-align: top;
+}
+
+.sortcol {
+	cursor: pointer;
+	padding-right: 20px;
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+.sortasc {
+	background-color: #DDFFAC;
+	background-image: url("/plugin_assets/redmine_lesite_projects/images/up.gif")!important;	
+}
+.sortdesc {
+	background-color: #B9DDFF;
+	background-image: url("/plugin_assets/redmine_lesite_projects/images/down.gif")!important;	
+}
+.nosort {
+	cursor: default;
+}
+.red {
+  color: red;
+}
+.bold {
+  font-weight: bold;
+}
+td.my-project {
+  padding-left: 20px!important;
+}
+
+table.projects td, th {
+  border-width: 0!important;
+	font-size: 11px;
+}
+table.projects th {
+	border-width: 1px!important;
+}
+table.projects tr.odd td {
+	background-color: #EEE!important
+}
+table.projects tr td:first-child, 
+table.projects tr td:first-child a {
+	font-weight: bold!important;
+}
+table.projects tr.overdue td.deadline, 
+table.projects tr.overdue td.due_date, 
+td.overbudget {
+	color: red!important;
+}
+.deadline_editor { 
+	display: none;
+}
+.total {
+  color: green;
+}
+#estimated_activity_hours_total {
+  font-size: 12px;
+  font-weight: bold;
+  padding-left: 7px;
+}
+</style>
 <%= calendar_date_select_includes "silver" %>
 
 <% content_for :header_tags do %>
@@ -24,67 +114,55 @@
 
 <h2><%=l(:label_project_plural)%></h2>
 
-<table id="projects" cellspacing="0" cellpadding="0" class="sortable">
-	<thead>
-		<tr>
-			<th>Project</th>
-			<th>Phase</th>
-			<th>Deadline</th>
-			<th>Due In</th>
-			<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
-				<th>
-					<%= activity.name %><br />Budget<br />
-					<span style="font-size:smaller">(used/est)</span>
-				</th>
-			<% end -%>
-			<th>
-				Total Budget<br />
-				<span style="font-size:smaller">(used/est)</span>
-			</th>
-			<th>Principals</th>
-			<th>Notes</th>
-		</tr>
-	</thead>
-	<tbody>
-	<% @projects.each do |project| %>
-		<tr class="project <%= project.root? ? 'root' : nil %> <%= cycle('even','odd') %> <%= project.deadline_passed? ? 'overdue' : nil %>">
-			<td class="<%= User.current.member_of?(project) ? 'my-project' : nil %>">
-				<%= project.ancestors.map { |a| "#{a.name} &#187; " } %>
-				<% if project.versions.present? -%>
-					<%= link_to project.name, "/projects/#{project.to_param}/roadmap" %>
-				<% else -%>
-					<%= link_to project.name, project %>
-				<% end -%>
-			</td>
-			<td><div class="edit_select" id="phase_<%= project.id %>"><%= project.phase %></div></td>
-			<td class="deadline">
-				<a href="#" class="edit_deadline">
-					<% if project.deadline.present? -%>
-						<%= project.deadline.strftime("%b %d")  %>
+<div id="projects_container">
+	<table id="projects" cellspacing="0" cellpadding="0" class="sortable projects" >
+		<thead>
+			<%= render "projects/thead" %>
+		</thead>
+		<tbody>
+		<% @projects.each_with_index do |project,index| %>
+			<%= render "projects/thead" if index % 12 == 0 && index > 0 %>
+		
+			<tr class="project <%= project.root? ? 'root' : nil %> <%= cycle('even','odd') %> <%= project.deadline_passed? ? 'overdue' : nil %>">
+				<td class="proj_col <%= User.current.member_of?(project) ? 'my-project' : nil %>">
+					<%= project.ancestors.map { |a| "#{a.name} &#187; " } %>
+					<% if project.versions.present? -%>
+						<%= link_to project.name, "/projects/#{project.to_param}/roadmap" %>
 					<% else -%>
-					 Click to edit
+						<%= link_to project.name, project %>
 					<% end -%>
-				</a>
-				<div class="deadline_editor">
-					<%= calendar_date_select_tag "date", @date, :id => "deadline_#{project.id}", :class => "deadline" %>
-					<button id="deadline_<%= project.id %>" class="close_deadline_editor submit_new_deadline">OK</button>
-					<button class="close_deadline_editor">X</button>
-				</div>
-			</td>
+				</td>
+				<td class="phase_col"><div class="edit_select" id="phase_<%= project.id %>"><%= project.phase %></div></td>
+				<td class="deadline deadline_col">
+					<a href="#" class="edit_deadline">
+						<% if project.deadline.present? -%>
+							<%= project.deadline.strftime("%b %d")  %>
+						<% else -%>
+						 Click to edit
+						<% end -%>
+					</a>
+					<div class="deadline_editor">
+						<%= calendar_date_select_tag "date", @date, :id => "deadline_#{project.id}", :class => "deadline" %>
+						<button id="deadline_<%= project.id %>" class="close_deadline_editor submit_new_deadline">OK</button>
+						<button class="close_deadline_editor">X</button>
+					</div>
+				</td>
 			
-			<td class="due_date"><%= project.lesite_due_date %></td>
+				<td class="due_date due_col"><%= project.lesite_due_date %></td>
 			
-			<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
-				<td class="<%=EstimatedActivityHour.overbudget?(project,activity) ? 'overbudget' : nil %>"><%= EstimatedActivityHour.used_over_estimated(project,activity) %></td>
-			<% end -%>
-			<td class="<%= EstimatedActivityHour.total_overbudget?(project) ? 'overbudget' : nil %>"><%= EstimatedActivityHour.total_used_over_estimated(project) %></td>
+				<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
+					<td class="budgets_col <%=EstimatedActivityHour.overbudget?(project,activity) ? 'overbudget' : nil %>"><%= EstimatedActivityHour.used_over_estimated(project,activity) %></td>
+				<% end -%>
+				<td class="budgets_col <%= EstimatedActivityHour.total_overbudget?(project) ? 'overbudget' : nil %>"><%= EstimatedActivityHour.total_used_over_estimated(project) %></td>
 			
-			<td><%= project.coordinator_maintainer %></td>
-			<td><div class='edit' id='notes_<%= project.id %>'><%= project.notes %></div></td>
-		</tr>
-	<% end -%>
-	</tbody>
-</table>
+				<td class="princ_col"><%= project.coordinator_maintainer %></td>
+				<td class="notes_col"><div class='edit' id='notes_<%= project.id %>'><%= project.notes %></div></td>
+			</tr>
+		<% end -%>
+		</tbody>
+	</table>
+
+</div>
 
 <% if User.current.logged? %>
 <p style="text-align:right;">
@@ -104,6 +182,6 @@
 	     data   : " {<%= Phase.all.map{ |p| "'#{p.name}':'#{p.name}'" }.join(',') %>}",
 	     type   : 'select',
 	     submit : 'OK'
-	 });
-	})
+	 	});
+	})	
 </script>
