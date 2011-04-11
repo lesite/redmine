@@ -18,3 +18,14 @@
 /tmp/test/*
 /vendor/rails
 *.rbc
+/config/harvest.yml
+/config/initializers/session_store.rb
+/db/schema.rb
+/config/deploy/*
+vendor/plugins/a_redmine_uploadify_documents_plugin
+vendor/plugins/redmine_add_schedule_link
+vendor/plugins/redmine_boilerplates
+vendor/plugins/redmine_burndown_chart
+vendor/plugins/redmine_global_roadmap
+vendor/plugins/redmine_lesite_bulk_adjust_version_deadlines
+vendor/plugins/redmine_lesite_projects
