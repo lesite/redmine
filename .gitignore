@@ -21,6 +21,7 @@
 /config/harvest.yml
 /config/initializers/session_store.rb
 /db/schema.rb
+/config/deploy.rb
 /config/deploy/*
 vendor/plugins/a_redmine_uploadify_documents_plugin
 vendor/plugins/redmine_add_schedule_link
