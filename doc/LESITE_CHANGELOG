@@ -1,0 +1,86 @@
+Release April 11, 2011
+======================
+
+* ------------ *
+* REQUIREMENTS *
+* ------------ *
+
+- add a custom field to Projects:
+	Name: “Iteration Length In Days”
+	Type: Integer
+	Required: True
+	Default: 7
+
+- and a custom field to Versions:
+	Name: “Adjust All Subsequent Versions”
+	Type: Boolean
+	For all projects: True
+	Tracker: Deliverable
+
+- redmine updated to v1.1.2
+
+- redmine time tracker plugin updated to 0.4
+
+- check exception notifier settings in config/environments/production.db
+
+* ------- *
+* UPDATES *
+* ------- *
+
+EMAIL 500 ERRORS TO MATT AND CHRIS OK
+-------------------------------------
+ADDED - https://github.com/smartinez87/exception_notification
+
+SETTINGS PAGE LIVE UPDATE OF TOTAL HOURS
+----------------------------------------
+ADDED - SHOW JS TOTAL LIVE UPDATE OF ESTIMATED ACTIVITY HOURS
+
+500 ERRORS WHEN SEARCHING FIXED
+-------------------------------
+FIXED
+
+PROJECTS TABLE 
+-----------------
+ADDED - Add a column that has a label “Principals” - the Maintainer/Coordinator before notes, after total budget – these are roles they have possible to have an inline editor for each.... would have a dropdown of people
+
+PROJECT TABLE
+-------------
+OK - increase vertical padding on each row by 20%
+
+OK - When you change the “deadline” column, it should ajax refresh the “due in” column, because these fields are interdependent
+
+OK - budgeted amounts (on right side of slashes) a bold font weight or (300 or whatever is stronger)
+
+
+PROJECT TABLE FLOATING THEAD
+----------------------------
+PROJECTS TABLE MAKE THE THEAD FLOAT SO IT FOLLOWS YOU AS YOU SCROLL - LIKE THOSE ANNOYING ADS
+SO ALL THE TD SHOULD BE FIXED WITH EXCEPT LAST FIELD MAYBE?
+REPEAT ROW AS WORST CASE ALTERNATIVE
+-- USED REPEATING ROWS EVERY 12 -- NO PROBLEM DOING THE FLOATING THING, BUT KEEPING THE TH AND TD WIDTHS IN SYNC MAY NOT BE POSSIBLE.... 
+
+- THIS COULD POSSIBLY BE IMPROVED IN FUTURE RELEASES TO USE FLOATING CONCEPT
+
+PROJECT SETTINGS BULK VERSION DUE DATE ADJUSTMENTS
+--------------------------------------------------
+ADDED:
+- ABILITY TO SET ITERATION LENGTH IN DAYS, INTEGER (EG 7 DAYS) on the project settings information page, default to 7 DAYS
+
+in edit form have a checkbox that says “adjust all subsequent versions” -- have it be checked by default....
+
+- When you change the date of a version, all subsequent version get adjusted
+
+users create the versions for a project before there are due dates,
+so the iteration length should automatically set all due dates based on the due date of the first iteration when you set that....
+
+versions edit template -- is where you would set the due date, and then when you submit that form, it should adjust all subsequent versions....
+
+so we can assume that subsequent versions can be found accurately by sorting by date ascending and then alphabetical (001, 002 etc)
+
+so it should basically always be checking the due dates of all versions and setting them in iteration sequences
+
+redmine_time_tracker plugin
+---------------------------
+- but when you press “stop” it goes to a 500 error -- FIXED BY UPGRADE
+- Possible to add a pause button? -- ADDED BY UPGRADE
+- it should have a seconds counter -- is that possible? -- IMPLEMENTATION A BIT PECULIAR, AWKWARD SITUATION BECAUSE IT’S DOING PERIOD UPDATES VIA AJAX
