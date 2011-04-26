@@ -16,7 +16,7 @@ module LesiteProjectsProjectPatch
   end
   
   module InstanceMethods
-
+    
     def lesite_due_date
       "#{deadline < Date.today ? :"Overdue By " : "Due In "}" + distance_of_date_in_words(Date.today, deadline) if deadline.present?
     end

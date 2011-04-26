@@ -1,93 +1,3 @@
-<style>
-
-table.projects {
-  border-collapse: collapse;
-}
-
-table.projects tr.root td {
-  border-top-width: 1px;
-  border-top-color: #333;
-}
-table.projects tr td {
-  padding-left: 14px;
-}
-table.projects tr.root td:first-child {
-  padding-left: 7px;
-}
-table.projects th, table.projects td {
-  text-align: left!important;
-  padding: 3px;
-  border: 1px solid #DDD;
-  border-collapse: collapse;
-  padding-top: 10px!important;
-  padding-bottom: 10px!important;
-}
-
-table.projects  th {
-  font-weight: normal;
-  background-color: #555;
-  color: white;
-  vertical-align: top;
-}
-
-.sortcol {
-	cursor: pointer;
-	padding-right: 20px;
-	background-repeat: no-repeat;
-	background-position: right center;
-}
-.sortasc {
-	background-color: #DDFFAC;
-	background-image: url("/plugin_assets/redmine_lesite_projects/images/up.gif")!important;	
-}
-.sortdesc {
-	background-color: #B9DDFF;
-	background-image: url("/plugin_assets/redmine_lesite_projects/images/down.gif")!important;	
-}
-.nosort {
-	cursor: default;
-}
-.red {
-  color: red;
-}
-.bold {
-  font-weight: bold;
-}
-td.my-project {
-  padding-left: 20px!important;
-}
-
-table.projects td, th {
-  border-width: 0!important;
-	font-size: 11px;
-}
-table.projects th {
-	border-width: 1px!important;
-}
-table.projects tr.odd td {
-	background-color: #EEE!important
-}
-table.projects tr td:first-child, 
-table.projects tr td:first-child a {
-	font-weight: bold!important;
-}
-table.projects tr.overdue td.deadline, 
-table.projects tr.overdue td.due_date, 
-td.overbudget {
-	color: red!important;
-}
-.deadline_editor { 
-	display: none;
-}
-.total {
-  color: green;
-}
-#estimated_activity_hours_total {
-  font-size: 12px;
-  font-weight: bold;
-  padding-left: 7px;
-}
-</style>
 <%= calendar_date_select_includes "silver" %>
 
 <% content_for :header_tags do %>
@@ -97,6 +7,7 @@ td.overbudget {
 		<%= javascript_include_tag 'jquery-1.3.2.min.js', :plugin => 'redmine_schedules'  %>
 		<%= javascript_include_tag "projects_index", :plugin => "redmine_lesite_projects" %>
 		<%= javascript_include_tag "jeditable", :plugin => "redmine_lesite_projects" %>
+		<%= javascript_include_tag "jquery-ui", :plugin => "redmine_lesite_projects" %>
 <% end %>
 
 <div class="contextual">
@@ -121,7 +32,7 @@ td.overbudget {
 		</thead>
 		<tbody>
 		<% @projects.each_with_index do |project,index| %>
-			<%= render "projects/thead" if index % 12 == 0 && index > 0 %>
+			<%= render "projects/thead" if index % 12 == 0 && index > 0 && 1==2 %>
 		
 			<tr class="project <%= project.root? ? 'root' : nil %> <%= cycle('even','odd') %> <%= project.deadline_passed? ? 'overdue' : nil %>">
 				<td class="proj_col <%= User.current.member_of?(project) ? 'my-project' : nil %>">
@@ -151,9 +62,12 @@ td.overbudget {
 				<td class="due_date due_col"><%= project.lesite_due_date %></td>
 			
 				<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
-					<td class="budgets_col <%=EstimatedActivityHour.overbudget?(project,activity) ? 'overbudget' : nil %>"><%= EstimatedActivityHour.used_over_estimated(project,activity) %></td>
+					<td class="budgets_col <%=EstimatedActivityHour.overbudget?(project,activity) ? 'overbudget' : nil %>"><%= EstimatedActivityHour.used(project,activity) %> / <span class='budget' id='budget_<%= activity.id %>_project_<%= project.id %>'><%= EstimatedActivityHour.budgeted(project.id, activity.id) %></span></td>
 				<% end -%>
-				<td class="budgets_col <%= EstimatedActivityHour.total_overbudget?(project) ? 'overbudget' : nil %>"><%= EstimatedActivityHour.total_used_over_estimated(project) %></td>
+				<td class="budgets_col <%= EstimatedActivityHour.total_overbudget?(project) ? 'overbudget' : nil %>">
+				<%= EstimatedActivityHour.total_used(project) %> / 
+				<span class="total"><%= EstimatedActivityHour.total(project) %></span>
+			</td>
 			
 				<td class="princ_col"><%= project.coordinator_maintainer %></td>
 				<td class="notes_col"><div class='edit' id='notes_<%= project.id %>'><%= project.notes %></div></td>
@@ -185,3 +99,5 @@ td.overbudget {
 	 	});
 	})	
 </script>
+
+)
