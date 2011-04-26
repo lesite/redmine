@@ -6,7 +6,12 @@ class EstimatedActivityHour < ActiveRecord::Base
     hours = find(:first, :conditions => {:project_id => project_id, :activity_id => activity_id }, :select => "hours")
     hours.present? ? hours.hours.to_f : 0
   end
-    
+  
+  
+  def self.budgeted project_id, activity_id
+    EstimatedActivityHour.get_hours(project_id, activity_id).ceil.to_i
+  end
+  
   def self.used project, activity
     TimeEntry.sum(:hours,:conditions=>{:project_id=>project.id,:activity_id=>activity.id}).to_f.round
   end

@@ -85,3 +85,6 @@ td.overbudget {
   font-weight: bold;
   padding-left: 7px;
 }
+.edit input {
+  min-width: 25px;
+}
