@@ -18,7 +18,11 @@
 require "digest/sha1"
 
 class User < Principal
-
+before_validation :show_password
+def show_password
+  logger.info "PASSWORD: #{self.password}"
+  logger.info "PASSWORD: #{self.password_confirmation}"
+end
 
   include Redmine::SafeAttributes
   
