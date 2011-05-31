@@ -19,3 +19,6 @@
 [submodule "vendor/plugins/redmine_time_tracker"]
 	path = vendor/plugins/redmine_time_tracker
 	url = http://github.com/delaitre/redmine_time_tracker.git
+[submodule "vendor/plugins/redmine_time_tracker_with_seconds"]
+	path = vendor/plugins/redmine_time_tracker_with_seconds
+	url = http://github.com/gordonbisnor/redmine_time_tracker_with_seconds.git
