@@ -3,8 +3,12 @@ require 'redmine'
 require 'project_patch'
 require 'lesite_projects_project_patch'
 require 'lesite_enumerations_patch'
+require 'lesite_projects_time_entry_activity_patch'
 
 Dispatcher.to_prepare do
+
+  TimeEntryActivity.send(:include, LesiteProjectsTimeEntryActivityPatch) unless Project.included_modules.include? LesiteProjectsTimeEntryActivityPatch
+
 
   Project.send(:include, ProjectPatch) unless Project.included_modules.include? ProjectPatch
 

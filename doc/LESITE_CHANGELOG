@@ -1,3 +1,30 @@
+May 31, 2011
+--------------
+
+* Bulk edit time entry activities => fixed when we upgrade Redmine
+
+* Forked the redmine_time_tracker plugin to redmine_time_tracker_with_seconds
+
+* Made time tracker plugin display seconds properly
+
+* Added a news plugin to make news index use summary field
+
+* Burndown hidden by default, small link to show/hide
+
+* Remove global roadmap module from project module settings 
+
+* Changed floating header plugin because original was jittery in Chrome, now using this one: http://blog.slackers.se/2009/07/jquery-floating-table-header-plugin.html
+
+* Remove duplicate columns when some activities are inactive for project
+
+* Refactored lesite projects table view finds into to time entry activity model patch
+
+* Show nothing rather than 0 / 0 on lesite projects table if activity is inactive for that project
+
+
+
+
+
 April 26, 2011
 --------------
 

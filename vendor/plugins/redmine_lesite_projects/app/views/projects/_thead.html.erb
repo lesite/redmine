@@ -3,7 +3,7 @@
 	<th class="phase_col">Phase</th>
 	<th class="deadline_col">Deadline</th>
 	<th class="due_col">Due In</th>
-	<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
+	<% TimeEntryActivity.projects_table.each do |activity| -%>
 		<th class="budgets_col">
 			<%= activity.name %><br />Budget<br />
 			<span style="font-size:smaller">(used/est)</span>

@@ -8,7 +8,7 @@
 <% end %>
 
 <div class="burndown_chart">
-	<div class="hide_show"><a href="#">Burndown</a></div>
+	<div class="hide_show"><a href="#">Show Burndown</a></div>
 	<div class="burndown">
 		<div class="burndown_range">
 			<label for="burndown_range">Set Burndown Range</label>
@@ -27,6 +27,8 @@
 <script>
 jQuery(document).ready(function(){
 	jQuery(".hide_show a").click(function(){
+		var t = jQuery(this).text();
+		jQuery(this).text(t == "Show Burndown" ? "Hide Burndown" : "Show Burndown");
 	  jQuery("div.burndown").toggle('fast');	
 	})
 })

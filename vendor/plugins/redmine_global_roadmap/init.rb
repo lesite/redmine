@@ -8,9 +8,9 @@ Redmine::Plugin.register :redmine_global_roadmap do
   version '0.0.0.1'
 
   # Configuring permissions for plugin's controllers.
-  project_module :redmine_global_roadmap do
-    permission :view_global_roadmap, { :global_roadmap => [:index] }, :public => true
-  end
+#  project_module :redmine_global_roadmap do
+#    permission :view_global_roadmap, { :global_roadmap => [:index] }, :public => true
+#  end
  
   # Creating menu entry. It appears in project menu as the last entry.
   menu :top_menu, :global_roadmap, { :controller => 'global_roadmap', :action => 'index' }, :caption => :global_roadmap

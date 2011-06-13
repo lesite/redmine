@@ -23,7 +23,7 @@ class EstimatedActivityHour < ActiveRecord::Base
   end
       
   def self.total project_id
-     hours = find(:all, :conditions=>{:project_id=>project_id},:select=>"hours")  
+     hours = find(:all, :conditions => { :project_id => project_id}, :select => "hours")  
       total = 0
       if hours.present?
         hours.map{|x| total = total + x.hours.to_f }
@@ -34,7 +34,7 @@ class EstimatedActivityHour < ActiveRecord::Base
   end
   
   def self.total_used project
-    t = TimeEntry.sum(:hours,:conditions=>{:project_id=>project.id}).to_f.round
+    t = TimeEntry.sum(:hours, :conditions => { :project_id => project.id }).to_f.round
     t.present? ? t : 0
   end
   

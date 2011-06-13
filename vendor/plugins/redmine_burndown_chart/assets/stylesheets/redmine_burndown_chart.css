@@ -12,7 +12,7 @@ div.burndown_range {
   margin-bottom: 10px;
 }
 .hide_show {
-	font-size: 18px;
+	font-size: 14px;
 	margin-bottom: 10px;
 }
 .burndown {
@@ -20,6 +20,7 @@ div.burndown_range {
 	border: 1px solid #CCC;
 	width: 660px;
 	padding-bottom: 10px;
+	display: none;
 }
 .burndown_chart {
 	margin-bottom: 25px;

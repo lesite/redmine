@@ -60,9 +60,13 @@
 				</td>
 			
 				<td class="due_date due_col"><%= project.lesite_due_date %></td>
-			
-				<% TimeEntryActivity.find(:all,:select=>"id,name").each do |activity| -%>
-					<td class="budgets_col <%=EstimatedActivityHour.overbudget?(project,activity) ? 'overbudget' : nil %>"><%= EstimatedActivityHour.used(project,activity) %> / <span class='budget' id='budget_<%= activity.id %>_project_<%= project.id %>'><%= EstimatedActivityHour.budgeted(project.id, activity.id) %></span></td>
+
+				<% TimeEntryActivity.projects_table.each do |activity| -%>
+					<td class="budgets_col <%= EstimatedActivityHour.overbudget?(project,activity) ? 'overbudget' : nil %>">
+						<% if project.activities.include? activity -%>
+							<%= EstimatedActivityHour.used(project,activity) %> / <span class='budget' id='budget_<%= activity.id %>_project_<%= project.id %>'><%= EstimatedActivityHour.budgeted(project.id, activity.id) %></span>
+					  <% end -%>
+					</td>
 				<% end -%>
 				<td class="budgets_col <%= EstimatedActivityHour.total_overbudget?(project) ? 'overbudget' : nil %>">
 				<%= EstimatedActivityHour.total_used(project) %> / 
@@ -99,5 +103,3 @@
 	 	});
 	})	
 </script>
-
-)
