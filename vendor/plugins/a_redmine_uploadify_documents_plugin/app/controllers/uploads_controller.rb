@@ -1,6 +1,6 @@
 class UploadsController < ApplicationController
   unloadable
-    
+      
   def create
     begin
       d = Document.first

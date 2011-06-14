@@ -1,3 +1,9 @@
+jQuery(document).ajaxSend(function(e, xhr, options) {
+  var token = jQuery("meta[name='csrf-token']").attr("content");
+  xhr.setRequestHeader("X-CSRF-Token", token);
+});
+
+
 jQuery.noConflict();
 
 jQuery(document).ready(function(){
@@ -6,7 +12,7 @@ jQuery(document).ready(function(){
   
   jQuery("#show_filter").change(function(){
     window.location.href = "?show="+this.value;
-  })
+  });
 
   // EDIT IN PLACE 
 	jQuery('.edit').editable('/lesite_projects/in_place_edit');
@@ -16,22 +22,22 @@ jQuery(document).ready(function(){
 	    var tr = jQuery(this).closest("tr");
 	    budgets = tr.find(".budget");
 	    var total = 0;
-      jQuery.each(budgets,function() { total += parseInt(jQuery(this).text()); });
+      jQuery.each(budgets,function() { 
+        total += parseInt(jQuery(this).text()); 
+      });
       var total_col = tr.find(".total");
-      total_col.html(total)
+      total_col.html(total);
       total_col.parent().effect("highlight");
     }
 	});
-				
-		
-				
+						
 	// DEADLINE		
 	jQuery("a.edit_deadline").click(function(){
 		jQuery(this).next(".deadline_editor").show();
 		jQuery(this).hide();
 		jQuery(this).next(".deadline_editor").find('input').focus();
 		return false;
-	}) 
+	});
 	
 	jQuery(".close_deadline_editor").click(function(){
 		jQuery(this).closest(".deadline_editor").hide();
@@ -53,9 +59,9 @@ jQuery(document).ready(function(){
 			})
 	  }
 		
-	})
+	});
 				
-})
+});
 
 /* FLOATING TABLE HEADER PLUGIN */
 (function(d){function h(c,a,e){c.width(a.width());if(!e.forceClass&&a.children("thead").length>0){a=a.children("thead").eq(0).children();e=jQuery("<thead/>");c.append(e);c=e}else a=a.find("."+e.markerClass);a.each(function(){var b=d(this),f=b[0].cloneNode(false),g=d(f);b.children().each(function(){var i=d(this),j=i.clone();j.width(i.width());g.append(j)});c.append(g)})}function k(c,a,e){c.width(a.width());var b;if(!e.forceClass&&a.children("thead").length>0){a=a.children("thead").eq(0).children().eq(0);

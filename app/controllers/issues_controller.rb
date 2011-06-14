@@ -1,28 +1,16 @@
 # Redmine - project management software
-<<<<<<< HEAD
-# Copyright (C) 2006-2008  Jean-Philippe Lang
-=======
 # Copyright (C) 2006-2011  Jean-Philippe Lang
->>>>>>> upstream/1.2-stable
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
-<<<<<<< HEAD
-# 
-=======
 #
->>>>>>> upstream/1.2-stable
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-<<<<<<< HEAD
-# 
-=======
 #
->>>>>>> upstream/1.2-stable
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -30,11 +18,7 @@
 class IssuesController < ApplicationController
   menu_item :new_issue, :only => [:new, :create]
   default_search_scope :issues
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> upstream/1.2-stable
   before_filter :find_issue, :only => [:show, :edit, :update]
   before_filter :find_issues, :only => [:bulk_edit, :bulk_update, :move, :perform_move, :destroy]
   before_filter :check_project_uniqueness, :only => [:move, :perform_move]
@@ -46,17 +30,10 @@ class IssuesController < ApplicationController
   accept_key_auth :index, :show, :create, :update, :destroy
 
   rescue_from Query::StatementInvalid, :with => :query_statement_invalid
-<<<<<<< HEAD
-  
-  helper :journals
-  helper :projects
-  include ProjectsHelper   
-=======
 
   helper :journals
   helper :projects
   include ProjectsHelper
->>>>>>> upstream/1.2-stable
   helper :custom_fields
   include CustomFieldsHelper
   helper :issue_relations
@@ -83,20 +60,12 @@ class IssuesController < ApplicationController
   verify :method => :post, :only => :create, :render => {:nothing => true, :status => :method_not_allowed }
   verify :method => :post, :only => :bulk_update, :render => {:nothing => true, :status => :method_not_allowed }
   verify :method => :put, :only => :update, :render => {:nothing => true, :status => :method_not_allowed }
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> upstream/1.2-stable
   def index
     retrieve_query
     sort_init(@query.sort_criteria.empty? ? [['id', 'desc']] : @query.sort_criteria)
     sort_update(@query.sortable_columns)
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> upstream/1.2-stable
     if @query.valid?
       case params[:format]
       when 'csv', 'pdf'
@@ -108,28 +77,16 @@ class IssuesController < ApplicationController
       else
         @limit = per_page_option
       end
-<<<<<<< HEAD
-      
-=======
 
->>>>>>> upstream/1.2-stable
       @issue_count = @query.issue_count
       @issue_pages = Paginator.new self, @issue_count, @limit, params['page']
       @offset ||= @issue_pages.current.offset
       @issues = @query.issues(:include => [:assigned_to, :tracker, :priority, :category, :fixed_version],
-<<<<<<< HEAD
-                              :order => sort_clause, 
-                              :offset => @offset, 
-                              :limit => @limit)
-      @issue_count_by_group = @query.issue_count_by_group
-      
-=======
                               :order => sort_clause,
                               :offset => @offset,
                               :limit => @limit)
       @issue_count_by_group = @query.issue_count_by_group
 
->>>>>>> upstream/1.2-stable
       respond_to do |format|
         format.html { render :template => 'issues/index.rhtml', :layout => !request.xhr? }
         format.api
@@ -144,35 +101,22 @@ class IssuesController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     render_404
   end
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> upstream/1.2-stable
   def show
     @journals = @issue.journals.find(:all, :include => [:user, :details], :order => "#{Journal.table_name}.created_on ASC")
     @journals.each_with_index {|j,i| j.indice = i+1}
     @journals.reverse! if User.current.wants_comments_in_reverse_order?
-<<<<<<< HEAD
-    @changesets = @issue.changesets.visible.all
-    @changesets.reverse! if User.current.wants_comments_in_reverse_order?
-=======
 
     if User.current.allowed_to?(:view_changesets, @project)
       @changesets = @issue.changesets.visible.all
       @changesets.reverse! if User.current.wants_comments_in_reverse_order?
     end
 
->>>>>>> upstream/1.2-stable
     @relations = @issue.relations.select {|r| r.other_issue(@issue) && r.other_issue(@issue).visible? }
     @allowed_statuses = @issue.new_statuses_allowed_to(User.current)
     @edit_allowed = User.current.allowed_to?(:edit_issues, @project)
     @priorities = IssuePriority.all
-<<<<<<< HEAD
-    @time_entry = TimeEntry.new
-=======
     @time_entry = TimeEntry.new(:issue => @issue, :project => @issue.project)
->>>>>>> upstream/1.2-stable
     respond_to do |format|
       format.html { render :template => 'issues/show.rhtml' }
       format.api
@@ -212,11 +156,7 @@ class IssuesController < ApplicationController
       end
     end
   end
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> upstream/1.2-stable
   def edit
     update_issue_from_params
 
@@ -278,11 +218,7 @@ class IssuesController < ApplicationController
     set_flash_from_bulk_issue_save(@issues, unsaved_issue_ids)
     redirect_back_or_default({:controller => 'issues', :action => 'index', :project_id => @project})
   end
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> upstream/1.2-stable
   def destroy
     @hours = TimeEntry.sum(:hours, :conditions => ['issue_id IN (?)', @issues]).to_f
     if @hours > 0
@@ -304,9 +240,6 @@ class IssuesController < ApplicationController
         return unless api_request?
       end
     end
-<<<<<<< HEAD
-    @issues.each(&:destroy)
-=======
     @issues.each do |issue|
       begin
         issue.reload.destroy
@@ -314,7 +247,6 @@ class IssuesController < ApplicationController
         # nothing to do, issue was already deleted (eg. by a parent)
       end
     end
->>>>>>> upstream/1.2-stable
     respond_to do |format|
       format.html { redirect_back_or_default(:action => 'index', :project_id => @project) }
       format.api  { head :ok }
@@ -323,9 +255,6 @@ class IssuesController < ApplicationController
 
 private
   def find_issue
-<<<<<<< HEAD
-    @issue = Issue.find(params[:id], :include => [:project, :tracker, :status, :author, :priority, :category])
-=======
     # Issue.visible.find(...) can not be used to redirect user to the login form
     # if the issue actually exists but requires authentication
     @issue = Issue.find(params[:id], :include => [:project, :tracker, :status, :author, :priority, :category])
@@ -333,27 +262,18 @@ private
       deny_access
       return
     end
->>>>>>> upstream/1.2-stable
     @project = @issue.project
   rescue ActiveRecord::RecordNotFound
     render_404
   end
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> upstream/1.2-stable
   def find_project
     project_id = (params[:issue] && params[:issue][:project_id]) || params[:project_id]
     @project = Project.find(project_id)
   rescue ActiveRecord::RecordNotFound
     render_404
   end
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> upstream/1.2-stable
   # Used by #edit and #update to set some common instance variables
   # from the params
   # TODO: Refactor, not everything in here is needed by #edit
@@ -361,15 +281,9 @@ private
     @allowed_statuses = @issue.new_statuses_allowed_to(User.current)
     @priorities = IssuePriority.all
     @edit_allowed = User.current.allowed_to?(:edit_issues, @project)
-<<<<<<< HEAD
-    @time_entry = TimeEntry.new
-    @time_entry.attributes = params[:time_entry]
-    
-=======
     @time_entry = TimeEntry.new(:issue => @issue, :project => @issue.project)
     @time_entry.attributes = params[:time_entry]
 
->>>>>>> upstream/1.2-stable
     @notes = params[:notes] || (params[:issue].present? ? params[:issue][:notes] : nil)
     @issue.init_journal(User.current, @notes)
     @issue.safe_attributes = params[:issue]
@@ -385,12 +299,9 @@ private
     else
       @issue = @project.issues.visible.find(params[:id])
     end
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> upstream/1.2-stable
     @issue.project = @project
+    @issue.author = User.current
     # Tracker must be set before custom field values
     @issue.tracker ||= @project.trackers.find((params[:issue] && params[:issue][:tracker_id]) || params[:tracker_id] || :first)
     if @issue.tracker.nil?
@@ -404,7 +315,6 @@ private
         @issue.watcher_user_ids = params[:issue]['watcher_user_ids']
       end
     end
-    @issue.author = User.current
     @priorities = IssuePriority.all
     @allowed_statuses = @issue.new_statuses_allowed_to(User.current, true)
   end
