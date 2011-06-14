@@ -35,3 +35,4 @@ vendor/plugins/redmine_burndown_chart
 vendor/plugins/redmine_global_roadmap
 vendor/plugins/redmine_lesite_bulk_adjust_version_deadlines
 vendor/plugins/redmine_lesite_projects
+.rvmrc
