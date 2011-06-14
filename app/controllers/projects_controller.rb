@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2009  Jean-Philippe Lang
+# Copyright (C) 2006-2011  Jean-Philippe Lang
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -64,34 +64,44 @@ class ProjectsController < ApplicationController
   
   # LE SITE VERSION
   def index
-    session[:show_projects_filter] = "active" if params[:show] == "active"
-    session[:show_projects_filter] = "all" if params[:show] == "all"
-    
-    respond_to do |format|
-        format.html { 
-          if params[:show] == "active" || session[:show_projects_filter] == "active"
-            @projects = Project.find(
-              :all, 
-              :order => "versions.effective_date IS NULL, versions.effective_date ASC, name ASC", 
-              :joins => [{ :issues => :status },:versions],
-              :conditions => ["#{IssueStatus.table_name}.is_closed = ? AND projects.status != 9 AND projects.boilerplate = ?", false, false],
-              :group => "projects.id",
-              :select => "projects.*"
-            )
-          else
-            @projects = Project.visible.find(:all, :order => 'lft') 
-          end
-        }
-        format.xml  {
-          @projects = Project.visible.find(:all, :order => 'lft')
-        }
-        format.atom {
-          projects = Project.visible.find(:all, :order => 'created_on DESC',
-                                                :limit => Setting.feeds_limit.to_i)
-          render_feed(projects, :title => "#{Setting.app_title}: #{l(:label_project_latest)}")
-        }
-      end
-  end
+      session[:show_projects_filter] = "active" if params[:show] == "active"
+      session[:show_projects_filter] = "all" if params[:show] == "all"
+
+      respond_to do |format|
+          format.html { 
+            if params[:show] == "active" || session[:show_projects_filter] == "active"
+              @projects = Project.find(
+                :all, 
+                :order => "versions.effective_date IS NULL, versions.effective_date ASC, name ASC", 
+                :joins => [{ :issues => :status },:versions],
+                :conditions => ["#{IssueStatus.table_name}.is_closed = ? AND projects.status != 9 AND projects.boilerplate = ?", false, false],
+                
+                
+                :group => "projects.id",
+                :select => "projects.*"
+              )
+            else
+              @projects = Project.visible.find(:all, :order => 'lft') 
+            end
+          }
+          format.xml  {
+            @projects = Project.visible.find(:all, :order => 'lft')
+          }
+          format.api  {
+            @offset, @limit = api_offset_and_limit
+            @project_count = Project.visible.count
+            @projects = Project.visible.all(:offset => @offset, :limit => @limit, :order => 'lft')
+          }
+          format.atom {
+            projects = Project.visible.find(:all, :order => 'created_on DESC',
+                                                  :limit => Setting.feeds_limit.to_i)
+            render_feed(projects, :title => "#{Setting.app_title}: #{l(:label_project_latest)}")
+          }
+        end
+    end
+  
+  
+  
   
   
   def new
@@ -149,7 +159,6 @@ class ProjectsController < ApplicationController
       Mailer.with_deliveries(params[:notifications] == '1') do
         @project = Project.new
         @project.safe_attributes = params[:project]
-        @project.enabled_module_names = params[:enabled_modules]
         if validate_parent_id && @project.copy(@source_project, :only => params[:only])
           @project.set_allowed_parent!(params[:project]['parent_id']) if params[:project].has_key?('parent_id')
           flash[:notice] = l(:notice_successful_create)
@@ -175,7 +184,7 @@ class ProjectsController < ApplicationController
     end
     
     @users_by_role = @project.users_by_role
-    @subprojects = @project.children.visible
+    @subprojects = @project.children.visible.all
     @news = @project.news.find(:all, :limit => 5, :include => [ :author, :project ], :order => "#{News.table_name}.created_on DESC")
     @trackers = @project.rolled_up_trackers
     
@@ -188,11 +197,10 @@ class ProjectsController < ApplicationController
                                             :include => [:project, :status, :tracker],
                                             :conditions => cond)
     
-    TimeEntry.visible_by(User.current) do
-      @total_hours = TimeEntry.sum(:hours, 
-                                   :include => :project,
-                                   :conditions => cond).to_f
+    if User.current.allowed_to?(:view_time_entries, @project)
+      @total_hours = TimeEntry.visible.sum(:hours, :include => :project, :conditions => cond).to_f
     end
+    
     @key = User.current.rss_key
     
     respond_to do |format|

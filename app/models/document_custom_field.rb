@@ -20,4 +20,3 @@ class DocumentCustomField < CustomField
     :label_document_plural
   end
 end
-
