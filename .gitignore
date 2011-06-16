@@ -39,3 +39,4 @@ vendor/plugins/redmine_lesite_projects
 doc/LESITE_REDMINE_NOTES.yml
 deploy.rb
 email.yml
+.DS_Store
