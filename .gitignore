@@ -37,3 +37,5 @@ vendor/plugins/redmine_lesite_bulk_adjust_version_deadlines
 vendor/plugins/redmine_lesite_projects
 .rvmrc
 doc/LESITE_REDMINE_NOTES.yml
+deploy.rb
+email.yml
