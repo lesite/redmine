@@ -17,15 +17,17 @@ rescue LoadError
   # Not available
 end
 
+
 Rails::Initializer.run do |config|
+  
   # Settings in config/environments/* take precedence those specified here
   
   # Skip frameworks you're not going to use
   # config.frameworks -= [ :action_web_service, :action_mailer ]
 
   # Add additional load paths for sweepers
-  config.autoload_paths += %W( #{RAILS_ROOT}/app/sweepers )
-
+  config.autoload_paths += %W( #{RAILS_ROOT}/app/sweepers #{RAILS_ROOT}/app/middleware)
+  
   # Force all environments to use the same logger level 
   # (by default production uses :info, the others :debug)
   # config.log_level = :debug
@@ -58,4 +60,5 @@ Rails::Initializer.run do |config|
   if File.exists?(File.join(File.dirname(__FILE__), 'additional_environment.rb'))
     instance_eval File.read(File.join(File.dirname(__FILE__), 'additional_environment.rb'))
   end
+    
 end
