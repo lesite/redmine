@@ -28,3 +28,5 @@ config.action_mailer.raise_delivery_errors = false
 
 # No email in production log
 config.action_mailer.logger = nil
+
+ExceptionNotification::Notifier.exception_recipients = %w(gordonbisnor@gmail.com)
