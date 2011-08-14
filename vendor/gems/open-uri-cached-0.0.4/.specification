@@ -1,0 +1,67 @@
+--- !ruby/object:Gem::Specification 
+name: open-uri-cached
+version: !ruby/object:Gem::Version 
+  hash: 23
+  prerelease: 
+  segments: 
+  - 0
+  - 0
+  - 4
+  version: 0.0.4
+platform: ruby
+authors: 
+- Danial Pearce
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2011-05-18 00:00:00 -03:00
+default_executable: 
+dependencies: []
+
+description: OpenURI with transparent disk caching
+email: rubygems@tigris.id.au
+executables: []
+
+extensions: []
+
+extra_rdoc_files: []
+
+files: []
+
+has_rdoc: true
+homepage: http://github.com/tigris/open-uri-cached
+licenses: []
+
+post_install_message: 
+rdoc_options: []
+
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: 
+rubygems_version: 1.6.2
+signing_key: 
+specification_version: 3
+summary: Do a lot of site scraping but take lots of attempts at parsing the content before reaching your end result? This gem is for you. But wait, there's more... Ok, no there isn't.
+test_files: []
+

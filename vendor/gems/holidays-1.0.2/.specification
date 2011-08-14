@@ -1,0 +1,130 @@
+--- !ruby/object:Gem::Specification 
+name: holidays
+version: !ruby/object:Gem::Version 
+  hash: 19
+  prerelease: 
+  segments: 
+  - 1
+  - 0
+  - 2
+  version: 1.0.2
+platform: ruby
+authors: 
+- Alex Dunae
+- Rowan Crawford
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2011-05-13 00:00:00 -03:00
+default_executable: 
+dependencies: []
+
+description: A collection of Ruby methods to deal with statutory and other holidays.  You deserve a holiday!
+email: code@dunae.ca
+executables: []
+
+extensions: []
+
+extra_rdoc_files: []
+
+files: 
+- test/defs/test_defs_au.rb
+- test/defs/test_defs_br.rb
+- test/defs/test_defs_ca.rb
+- test/defs/test_defs_cz.rb
+- test/defs/test_defs_de.rb
+- test/defs/test_defs_dk.rb
+- test/defs/test_defs_el.rb
+- test/defs/test_defs_es.rb
+- test/defs/test_defs_europe.rb
+- test/defs/test_defs_fi.rb
+- test/defs/test_defs_fr.rb
+- test/defs/test_defs_gb.rb
+- test/defs/test_defs_ie.rb
+- test/defs/test_defs_is.rb
+- test/defs/test_defs_it.rb
+- test/defs/test_defs_jp.rb
+- test/defs/test_defs_mx.rb
+- test/defs/test_defs_nl.rb
+- test/defs/test_defs_no.rb
+- test/defs/test_defs_north_america.rb
+- test/defs/test_defs_nyse.rb
+- test/defs/test_defs_nz.rb
+- test/defs/test_defs_pt.rb
+- test/defs/test_defs_scandinavia.rb
+- test/defs/test_defs_se.rb
+- test/defs/test_defs_ups.rb
+- test/defs/test_defs_us.rb
+- test/defs/test_defs_za.rb
+- test/test_date.rb
+- test/test_helper.rb
+- test/test_holidays.rb
+- test/test_multiple_regions.rb
+has_rdoc: true
+homepage: https://github.com/alexdunae/holidays
+licenses: []
+
+post_install_message: 
+rdoc_options: []
+
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: 
+rubygems_version: 1.6.2
+signing_key: 
+specification_version: 3
+summary: A collection of Ruby methods to deal with statutory and other holidays.  You deserve a holiday!
+test_files: 
+- test/defs/test_defs_au.rb
+- test/defs/test_defs_br.rb
+- test/defs/test_defs_ca.rb
+- test/defs/test_defs_cz.rb
+- test/defs/test_defs_de.rb
+- test/defs/test_defs_dk.rb
+- test/defs/test_defs_el.rb
+- test/defs/test_defs_es.rb
+- test/defs/test_defs_europe.rb
+- test/defs/test_defs_fi.rb
+- test/defs/test_defs_fr.rb
+- test/defs/test_defs_gb.rb
+- test/defs/test_defs_ie.rb
+- test/defs/test_defs_is.rb
+- test/defs/test_defs_it.rb
+- test/defs/test_defs_jp.rb
+- test/defs/test_defs_mx.rb
+- test/defs/test_defs_nl.rb
+- test/defs/test_defs_no.rb
+- test/defs/test_defs_north_america.rb
+- test/defs/test_defs_nyse.rb
+- test/defs/test_defs_nz.rb
+- test/defs/test_defs_pt.rb
+- test/defs/test_defs_scandinavia.rb
+- test/defs/test_defs_se.rb
+- test/defs/test_defs_ups.rb
+- test/defs/test_defs_us.rb
+- test/defs/test_defs_za.rb
+- test/test_date.rb
+- test/test_helper.rb
+- test/test_holidays.rb
+- test/test_multiple_regions.rb
