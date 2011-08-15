@@ -8,4 +8,5 @@ config.gem 'holidays'
 config.gem 'icalendar'
 config.gem 'prawn'
 config.gem 'nokogiri'
-config.gem 'open-uri-cached', :version => "0.6.7"
+config.gem 'open-uri-cached', :version => "~> 0.0.4", :lib => "open-uri/cached"
+
