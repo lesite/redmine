@@ -7,7 +7,7 @@ May 31, 2011
 
 * Bulk edit time entry activities => fixed when we upgrade Redmine
 
-* Forked the redmine_time_tracker plugin to redmine_time_tracker_with_seconds
+* Forked the redmine_time_tracker plugin
 
 * Made time tracker plugin display seconds properly
 
