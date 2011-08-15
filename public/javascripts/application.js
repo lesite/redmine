@@ -370,9 +370,3 @@ function hideOnLoad() {
 }
 
 Event.observe(window, 'load', hideOnLoad);
-
-/* FIX FOR AJAX SESSIONS */
-jQuery(document).ajaxSend(function(e, xhr, options) {
-  var token = $("meta[name='csrf-token']").attr("content");
-  xhr.setRequestHeader("X-CSRF-Token", token);
-});
