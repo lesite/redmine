@@ -36,7 +36,7 @@ module LesiteProjectsProjectPatch
         :select => "concat_ws(users.first_name,users.last_name,'')") if coordinator_role.present?
       coordinator_name = coordinator.present? ? coordinator.name : "N/A"
       maintainer_name = coordinator.present? ? coordinator.name : "N/A"
-      ["#{coordinator_name} (C)", "#{maintainer_name} (M)"].join(", ")
+      ["#{coordinator_name} (PM)", "#{maintainer_name} (LD)"].join(", ")
     end
     
   end    
