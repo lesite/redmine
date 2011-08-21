@@ -1,5 +1,4 @@
 class LesiteBurndown
-  set_table_name "burndowns"
   
   DEFAULTS = {
       :width => 650, 
