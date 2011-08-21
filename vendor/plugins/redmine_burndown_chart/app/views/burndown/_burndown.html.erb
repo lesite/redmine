@@ -19,7 +19,7 @@
 		   </select>
 		</div>
 		<div class="y_axis_label">o<br />p<br />e<br />n<br /><br />i<br/>s<br/>s<br/>u<br/>e<br/>s</div>
-		<img src='<%= Burndown.chart(@project, (params[:days]||30).to_i) %>'/> 
+		<img src='<%= LesiteBurndown.chart(@project, (params[:days]||30).to_i) %>'/> 
 		<div class="x_axis_label">days</div>
 	</div> 
 </div>

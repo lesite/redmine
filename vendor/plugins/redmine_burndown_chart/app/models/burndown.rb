@@ -1,4 +1,5 @@
-class Burndown
+class LesiteBurndown
+  set_table_name "burndowns"
   
   DEFAULTS = {
       :width => 650, 
@@ -14,7 +15,7 @@ class Burndown
   
   def self.chart project, days
     total = project.issues.count
-    args = Burndown::DEFAULTS.merge({
+    args = LesiteBurndown::DEFAULTS.merge({
   	  :remaining => IssueBurndownLog.issues_remaining_in_last_thirty_days(project.id,days),
   	  :completed => IssueBurndownLog.issues_closed_in_last_thirty_days(project.id,days), 
       :y_range => [1, 0, total, (total.to_f / 15.to_f).ceil],
