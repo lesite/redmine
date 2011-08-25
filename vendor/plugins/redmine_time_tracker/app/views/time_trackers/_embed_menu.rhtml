@@ -57,5 +57,6 @@
 <% end %>
 
 <script type="text/javascript">
+	<%= "pause = #{time_tracker && !time_tracker.paused ? false : true };" -%>
 	start_timer();
 </script>

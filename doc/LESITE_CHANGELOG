@@ -1,10 +1,19 @@
+August 25, 2011
+---------------
+* Backlogs card printing seems to be broken. E.g. http://jazzstage.lesite.ca/rb/stories/bench.pdf (as accessed by clicking on "Product backlog cards" from the project backlogs view). -- Fixed by upgrading Ruby from 1.8.7-p249 to 1.87-p352 from 
+
+* timer plugin. Pausing doesn't seem to work.
+
 August 21, 2011
 ---------------
 
 * Change request: in Projects Table template pls change Principals' "(C)" and "(M)" to "(PM)" and "(LD)" respectively. 
 
+* Bug: Also going to the roadmap of any project throws a 500.
 
+* Cosmetic bug on stage. When the window is wide enough for the search bar to go beside the last tab, the project label floats right
 
+* Links to project wikis within Backlogs are also 500. Seems URLs with "/rb" might all be wrong? E.g. http://jazzstage.lesite.ca/rb/wikis/37/edit?project_id=11 from the dropdown "Wiki" link on a sprint in the Master Backlog. 
 
 
 
