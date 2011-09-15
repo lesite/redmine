@@ -6,7 +6,7 @@
             { :controller => 'issues', :action => 'show', :id => time_tracker.issue_id },
             { :class => 'icon icon-pause' }
         %>
-         / <%= time_tracker.time_spent_to_s %> /
+         / &#149; <%= time_tracker.time_spent_to_s %> /
         <%= link_to_remote '',
             :url => { :controller => 'time_trackers', :action => 'resume' },
             :html => { :class => 'icon-action icon-start-action', :title => l(:resume_time_tracker) },
@@ -22,7 +22,7 @@
             { :controller => 'issues', :action => 'show', :id => time_tracker.issue_id },
             { :class => 'icon icon-clock' }
         %>
-         / <%= time_tracker.time_spent_to_s %> /
+         / <span id="blinker">&#149;</span> <%= time_tracker.time_spent_to_s %><script type="text/javascript">jQuery("#blinker").blink();</script> /
         <%= link_to_remote '',
             :url => { :controller => 'time_trackers', :action => 'suspend' },
             :html => { :class => 'icon-action icon-pause-action', :title => l(:suspend_time_tracker) },
@@ -55,8 +55,3 @@
         %>
     </span>
 <% end %>
-
-<script type="text/javascript">
-	<%= "pause = #{time_tracker && !time_tracker.paused ? false : true };" -%>
-	start_timer();
-</script>

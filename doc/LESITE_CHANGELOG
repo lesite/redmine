@@ -1,8 +1,18 @@
+September 15, 2011 
+------------------
+* Made time tracker use blinking bullet when active rather than seconds display
+
+
+
+
 August 25, 2011
 ---------------
 * Backlogs card printing seems to be broken. E.g. http://jazzstage.lesite.ca/rb/stories/bench.pdf (as accessed by clicking on "Product backlog cards" from the project backlogs view). -- Fixed by upgrading Ruby from 1.8.7-p249 to 1.87-p352 from 
 
 * timer plugin. Pausing doesn't seem to work.
+
+
+
 
 August 21, 2011
 ---------------
@@ -21,8 +31,6 @@ August 14, 2011
 ---------------
 
 * Added Redmine Backlogs plugin
-
-
 
 
 
@@ -62,7 +70,6 @@ April 26, 2011
 *  Projects table now has editable budgeted hours
 
 * when you save a new inline-editing value for estimated budget column, it should force a refresh of the “total budget” column -- maybe it should show a loading icon? or a highlight to indicate
-
 
 
 
