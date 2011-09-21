@@ -3,5 +3,5 @@
  */
 function updateElementIfChanged(id, newContent) {
     el = $(id);
-    if (el.innerHTML != newContent) { el.update(newContent); jQuery("#blinker").blink(); }
+    if (el.innerHTML != newContent) { el.update(newContent);  Effect.Pulsate('blinker', { duration: '120.0', pulses: 120}); }
 }

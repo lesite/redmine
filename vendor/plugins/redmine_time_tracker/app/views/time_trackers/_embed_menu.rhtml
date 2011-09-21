@@ -22,7 +22,7 @@
             { :controller => 'issues', :action => 'show', :id => time_tracker.issue_id },
             { :class => 'icon icon-clock' }
         %>
-         / <span id="blinker">&#149;</span> <%= time_tracker.time_spent_to_s %><script type="text/javascript">jQuery("#blinker").blink();</script> /
+         / <span id="blinker">&#149;</span> <%= time_tracker.time_spent_to_s %><script type="text/javascript">Effect.Pulsate('blinker', { duration: 120.0, pulses: 120});</script> /
         <%= link_to_remote '',
             :url => { :controller => 'time_trackers', :action => 'suspend' },
             :html => { :class => 'icon-action icon-pause-action', :title => l(:suspend_time_tracker) },
