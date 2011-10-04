@@ -74,6 +74,8 @@ class User < Principal
   validates_confirmation_of :password, :allow_nil => true
   validates_inclusion_of :mail_notification, :in => MAIL_NOTIFICATION_OPTIONS.collect(&:first), :allow_blank => true
 
+  before_create :set_mail_notification
+  before_save   :update_hashed_password
   before_destroy :remove_references_before_destroy
   
   named_scope :in_group, lambda {|group|
@@ -85,15 +87,17 @@ class User < Principal
     { :conditions => ["#{User.table_name}.id NOT IN (SELECT gu.user_id FROM #{table_name_prefix}groups_users#{table_name_suffix} gu WHERE gu.group_id = ?)", group_id] }
   }
   
-  def before_create
+  def set_mail_notification
     self.mail_notification = Setting.default_notification_option if self.mail_notification.blank?
     true
   end
   
-  def before_save
+  def update_hashed_password
     # update hashed_password if password was set
     if self.password && self.auth_source_id.blank?
       salt_password(password)
+    else
+      logger.info "PASSWORD: #{self.password} AND AUTH SOURCE BLANK? #{self.auth_source_id.blank?}"
     end
   end
   

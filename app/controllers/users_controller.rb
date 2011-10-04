@@ -98,7 +98,7 @@ class UsersController < ApplicationController
     @user.safe_attributes = params[:user]
     @user.admin = params[:user][:admin] || false
     @user.login = params[:user][:login]
-    @user.password, @user.password_confirmation = params[:user][:password], params[:user][:password_confirmation] unless @user.auth_source_id
+    @user.password, @user.password_confirmation = params[:password], params[:password_confirmation] unless @user.auth_source_id
 
     # TODO: Similar to My#account
     @user.pref.attributes = params[:pref]
