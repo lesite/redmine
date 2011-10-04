@@ -43,27 +43,8 @@ class ProjectsController < ApplicationController
   helper :repositories
   include RepositoriesHelper
   include ProjectsHelper
-  
+    
   # Lists visible projects
-  def index
-    respond_to do |format|
-      format.html { 
-        @projects = Project.visible.find(:all, :order => 'lft') 
-      }
-      format.api  {
-        @offset, @limit = api_offset_and_limit
-        @project_count = Project.visible.count
-        @projects = Project.visible.all(:offset => @offset, :limit => @limit, :order => 'lft')
-      }
-      format.atom {
-        projects = Project.visible.find(:all, :order => 'created_on DESC',
-                                              :limit => Setting.feeds_limit.to_i)
-        render_feed(projects, :title => "#{Setting.app_title}: #{l(:label_project_latest)}")
-      }
-    end
-  end
-  
-  # LE SITE VERSION
   def index
       session[:show_projects_filter] = "active" if params[:show] == "active"
       session[:show_projects_filter] = "all" if params[:show] == "all"
@@ -84,9 +65,6 @@ class ProjectsController < ApplicationController
             else
               @projects = Project.visible.find(:all, :order => 'lft') 
             end
-          }
-          format.xml  {
-            @projects = Project.visible.find(:all, :order => 'lft')
           }
           format.api  {
             @offset, @limit = api_offset_and_limit
