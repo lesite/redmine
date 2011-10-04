@@ -1,3 +1,12 @@
+October 4, 2001
+---------------
+* Fixed problem with Issues => Subtasks - added parent id field
+* Updated user model to conform with Redmine master, hacked users controller to make passwords save 
+* Fixed projects API endpoint
+
+
+
+
 September 15, 2011 
 ------------------
 * Made time tracker use blinking bullet when active rather than seconds display
